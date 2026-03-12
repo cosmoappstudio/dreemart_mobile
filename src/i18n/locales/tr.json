@@ -1,0 +1,110 @@
+{
+  "tabs": {
+    "dream": "Rüya",
+    "gallery": "Galeri",
+    "profile": "Profil"
+  },
+  "dream": {
+    "title": "RÜYANI ANLAT",
+    "artistTitle": "SANATÇI SEÇ",
+    "artistSubtitle": "Her biri 1 kredi harcar",
+    "placeholder": "Dün gece sonsuz bir merdivene tırmanıyordum...",
+    "createBtn": "Tablonu Oluştur ({{count}} Kredi)",
+    "hint": "Rüyanı ne kadar detaylı anlatırsan, görselleştirme o kadar iyi olur."
+  },
+  "gallery": {
+    "title": "Galeri",
+    "loading": "Yükleniyor...",
+    "empty": "Henüz rüya yok. İlk rüyanı oluştur!",
+    "emptySubtext": "Rüyalarını anlat, tablolarını oluştur"
+  },
+  "profile": {
+    "title": "Profilim",
+    "freePlan": "ÜCRETSİZ PLAN",
+    "proPlan": "PRO",
+    "remainingCredits": "KALAN KREDİ",
+    "getCredits": "+ Kredi Al",
+    "generated": "ÜRETİLEN",
+    "totalDreams": "Toplam Rüya",
+    "dreamScore": "RÜYA SKORU",
+    "dreamScoreFormula": "Toplam rüya x 10",
+    "level": "SEVİYE",
+    "dreamsCount": "{{count}} rüya",
+    "restorePurchases": "Satın Alımları Geri Yükle",
+    "privacyPolicy": "Gizlilik Politikası",
+    "termsOfUse": "Kullanım Koşulları",
+    "termsAndConditions": "Sözleşmeler ve Koşullar",
+    "privacyAgreement": "Gizlilik Sözleşmesi",
+    "notificationSettings": "Bildirim Ayarları",
+    "rateUs": "Bizi Değerlendir",
+    "support": "Destek",
+    "deleteAccount": "Hesabımı Sil",
+    "eula": "EULA",
+    "language": "Dil",
+    "deleteAccountConfirmTitle": "Hesabı Sil",
+    "deleteAccountConfirmMessage": "Hesabınız silinecek. Bu işlem geri alınamaz. Devam etmek istiyor musunuz?",
+    "deleteAccountSuccess": "Hesabınız silindi",
+    "defaultUsername": "Rüya Yolcusu",
+    "languageUpdated": "Dil güncellendi",
+    "languageUpdateError": "Dil güncellenemedi"
+  },
+  "levels": {
+    "new": "Yeni Rüyacı",
+    "explorer": "Rüya Keşfedici",
+    "master": "Rüya Ustası",
+    "virtuoso": "Rüya Virtüözü"
+  },
+  "paywall": {
+    "title": "Kredi Paketleri",
+    "subtitle": "Daha fazla rüya görselleştirmek için kredi al",
+    "emptyHint": "Profil sayfasından kredi paketlerine ulaşabilirsin.",
+    "mostPopular": "En Popüler",
+    "credits": "{{count}} Kredi",
+    "restore": "Satın Alımları Geri Yükle"
+  },
+  "onboarding": {
+    "step1Title": "Rüyalarını Görselleştir",
+    "step1Desc": "Rüyalarını metin olarak anlat, yapay zeka onları benzersiz sanat eserlerine dönüştürsün.",
+    "step2Title": "40'tan Fazla Sanatçı Stili",
+    "step2Desc": "Van Gogh, Monet, Dalí ve daha fazlası. Her rüyana özel bir sanatçı stili seç.",
+    "step3Title": "Bildirimleri Aç",
+    "step3Desc": "Yeni rüya hatırlatmaları ve özel tekliflerden haberdar ol.",
+    "step4Title": "Başlamaya Hazır Mısın?",
+    "step4Desc": "1 ücretsiz kredi ile hemen başla. Daha fazlası için kredi paketlerimizi keşfet.",
+    "next": "İleri",
+    "start": "Başla",
+    "enableNotifications": "Bildirimleri Aç",
+    "skip": "Atla"
+  },
+  "generation": {
+    "loading": "Rüyan canlanıyor...",
+    "loadingSubtext": "Bu birkaç saniye sürebilir",
+    "interpretation": "Yorum",
+    "save": "Kaydet",
+    "share": "Paylaş",
+    "back": "Geri Dön",
+    "newDream": "Yeni Rüya",
+    "error": "Bir hata oluştu",
+    "saved": "Kaydedildi",
+    "saveError": "Kaydetme hatası",
+    "shareNotSupported": "Paylaşım desteklenmiyor",
+    "shareError": "Paylaşım hatası"
+  },
+  "dreamDetail": {
+    "interpretation": "Rüya Yorumu",
+    "download": "İndir",
+    "share": "Paylaş"
+  },
+  "artists": {
+    "loading": "Ressamlar yükleniyor...",
+    "empty": "Henüz ressam bulunamadı."
+  },
+  "errors": {
+    "insufficientCredits": "Yetersiz kredi",
+    "artistLocked": "Bu sanatçı ücretsiz planda kullanılamaz"
+  },
+  "common": {
+    "permissionRequired": "İzin Gerekli",
+    "photoLibraryPermission": "Fotoğraf kütüphanesine kaydetmek için izin verin."
+  }
+}

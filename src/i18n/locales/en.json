@@ -1,0 +1,110 @@
+{
+  "tabs": {
+    "dream": "Dream",
+    "gallery": "Gallery",
+    "profile": "Profile"
+  },
+  "dream": {
+    "title": "DESCRIBE YOUR DREAM",
+    "artistTitle": "CHOOSE ARTIST",
+    "artistSubtitle": "Each costs 1 credit",
+    "placeholder": "Last night I was climbing an endless staircase...",
+    "createBtn": "Create Your Painting ({{count}} Credit)",
+    "hint": "The more detailed you describe your dream, the better the visualization."
+  },
+  "gallery": {
+    "title": "Gallery",
+    "loading": "Loading...",
+    "empty": "No dreams yet. Create your first dream!",
+    "emptySubtext": "Describe your dreams, create your paintings"
+  },
+  "profile": {
+    "title": "My Profile",
+    "freePlan": "FREE PLAN",
+    "proPlan": "PRO",
+    "remainingCredits": "REMAINING CREDITS",
+    "getCredits": "+ Get Credits",
+    "generated": "GENERATED",
+    "totalDreams": "Total Dreams",
+    "dreamScore": "DREAM SCORE",
+    "dreamScoreFormula": "Total dreams x 10",
+    "level": "LEVEL",
+    "dreamsCount": "{{count}} dreams",
+    "restorePurchases": "Restore Purchases",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfUse": "Terms of Use",
+    "termsAndConditions": "Terms and Conditions",
+    "privacyAgreement": "Privacy Agreement",
+    "notificationSettings": "Notification Settings",
+    "rateUs": "Rate Us",
+    "support": "Support",
+    "deleteAccount": "Delete My Account",
+    "eula": "EULA",
+    "language": "Language",
+    "deleteAccountConfirmTitle": "Delete Account",
+    "deleteAccountConfirmMessage": "Your account will be deleted. This action cannot be undone. Are you sure you want to continue?",
+    "deleteAccountSuccess": "Your account has been deleted",
+    "defaultUsername": "Dream Traveler",
+    "languageUpdated": "Language updated",
+    "languageUpdateError": "Failed to update language"
+  },
+  "levels": {
+    "new": "New Dreamer",
+    "explorer": "Dream Explorer",
+    "master": "Dream Master",
+    "virtuoso": "Dream Virtuoso"
+  },
+  "paywall": {
+    "title": "Credit Packages",
+    "subtitle": "Get credits to visualize more dreams",
+    "emptyHint": "You can access credit packages from the profile page.",
+    "mostPopular": "Most Popular",
+    "credits": "{{count}} Credits",
+    "restore": "Restore Purchases"
+  },
+  "onboarding": {
+    "step1Title": "Visualize Your Dreams",
+    "step1Desc": "Describe your dreams in text, and AI will turn them into unique works of art.",
+    "step2Title": "40+ Artist Styles",
+    "step2Desc": "Van Gogh, Monet, Dalí and more. Choose a unique artist style for each dream.",
+    "step3Title": "Enable Notifications",
+    "step3Desc": "Get reminders for new dreams and stay updated on special offers.",
+    "step4Title": "Ready to Start?",
+    "step4Desc": "Start now with 1 free credit. Explore our credit packages for more.",
+    "next": "Next",
+    "start": "Start",
+    "enableNotifications": "Enable Notifications",
+    "skip": "Skip"
+  },
+  "generation": {
+    "loading": "Your dream is coming to life...",
+    "loadingSubtext": "This may take a few seconds",
+    "interpretation": "Interpretation",
+    "save": "Save",
+    "share": "Share",
+    "back": "Go Back",
+    "newDream": "New Dream",
+    "error": "An error occurred",
+    "saved": "Saved",
+    "saveError": "Save error",
+    "shareNotSupported": "Sharing not supported",
+    "shareError": "Share error"
+  },
+  "dreamDetail": {
+    "interpretation": "Dream Interpretation",
+    "download": "Download",
+    "share": "Share"
+  },
+  "artists": {
+    "loading": "Loading artists...",
+    "empty": "No artists found."
+  },
+  "errors": {
+    "insufficientCredits": "Insufficient credits",
+    "artistLocked": "This artist is not available on the free plan"
+  },
+  "common": {
+    "permissionRequired": "Permission Required",
+    "photoLibraryPermission": "Grant permission to save to photo library."
+  }
+}

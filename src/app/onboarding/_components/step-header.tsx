@@ -28,7 +28,6 @@ export function StepHeader({ currentStep, totalSteps }: StepHeaderProps) {
                 <Feather name="chevron-left" size={24} color="#888" />
             </Pressable>
 
-            {/* Dots */}
             <View className="flex-row items-center gap-2">
                 {Array.from({ length: totalSteps }).map((_, index) => (
                     <View

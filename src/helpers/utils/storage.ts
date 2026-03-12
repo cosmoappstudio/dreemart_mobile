@@ -1,6 +1,4 @@
-import { createMMKV } from 'react-native-mmkv';
-
-export const storage_instance = createMMKV();
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const StorageKeys = {
   ONBOARDING_DONE: 'onboarding_done',
@@ -11,14 +9,14 @@ export const StorageKeys = {
 export const storage = {
   set: async (key: string, value: string | boolean | number) => {
     try {
-      storage_instance.set(key, value);
+      await AsyncStorage.setItem(key, String(value));
     } catch (e) {
       console.error('Error saving data', e);
     }
   },
   getString: async (key: string) => {
     try {
-      return storage_instance.getString(key);
+      return await AsyncStorage.getItem(key);
     } catch (e) {
       console.error('Error reading data', e);
       return null;
@@ -26,7 +24,8 @@ export const storage = {
   },
   getBoolean: async (key: string) => {
     try {
-      return storage_instance.getBoolean(key);
+      const val = await AsyncStorage.getItem(key);
+      return val === 'true';
     } catch (e) {
       console.error('Error reading data', e);
       return false;
@@ -34,7 +33,7 @@ export const storage = {
   },
   remove: async (key: string) => {
     try {
-      storage_instance.remove(key);
+      await AsyncStorage.removeItem(key);
     } catch (e) {
       console.error('Error removing data', e);
     }
