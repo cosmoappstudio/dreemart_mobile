@@ -32,6 +32,26 @@ export default {
       },
     ],
     'expo-media-library',
+    [
+      'expo-notifications',
+      {
+        icon: './assets/images/icon.png',
+        sounds: [],
+        mode: 'production',
+      },
+    ],
+    [
+      'react-native-fbsdk-next',
+      {
+        appID: process.env.EXPO_PUBLIC_META_APP_ID || '',
+        clientToken: process.env.EXPO_PUBLIC_META_CLIENT_TOKEN || '',
+        displayName: 'Dreemart',
+        scheme: 'dreemart',
+        advertiserIDCollectionEnabled: false,
+        autoLogAppEventsEnabled: true,
+        isAutoInitEnabled: true,
+      },
+    ],
   ],
   experiments: {
     typedRoutes: true,

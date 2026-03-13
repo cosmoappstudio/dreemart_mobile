@@ -24,7 +24,9 @@ import { AuthProvider, useAuth } from '../contexts/auth-context';
 import { DreemartRevenueCatProvider } from '../contexts/dreemart-revenuecat-context';
 import { OnboardingProvider, useOnboarding } from '../contexts/onboarding-context';
 import { ProfileProvider } from '../contexts/profile-context';
-import { initAmplitude } from '../lib/amplitude';
+import { Analytics, initAmplitude } from '../lib/amplitude';
+import { initMeta, logMetaEvent } from '../lib/meta';
+import { PushNotificationSetup } from '../components/PushNotificationSetup';
 import { colors } from '../constants/theme';
 
 function LoadingScreen() {
@@ -89,6 +91,7 @@ function AppWithAuth() {
   return (
     <DreemartRevenueCatProvider userId={userId}>
       <ProfileProvider userId={userId}>
+        <PushNotificationSetup userId={userId} />
         <OnboardingProvider>
           <AppContent />
         </OnboardingProvider>
@@ -107,6 +110,9 @@ export default function Layout() {
 
   useEffect(() => {
     initAmplitude();
+    initMeta();
+    Analytics.appOpened();
+    logMetaEvent('app_launch');
   }, []);
 
   if (!fonts) {

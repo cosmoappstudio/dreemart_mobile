@@ -225,8 +225,8 @@ const styles = StyleSheet.create({
     position: 'relative',
   },
   packageCardPopular: {
-    borderColor: colors.primary,
-    backgroundColor: 'rgba(124, 58, 237, 0.15)',
+    borderColor: colors.accent,
+    backgroundColor: 'rgba(249, 115, 22, 0.15)',
   },
   packageCardPressed: {
     opacity: 0.9,
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
   badgeText: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#000',
+    color: colors.background,
   },
   packageRow: {
     flexDirection: 'row',
@@ -258,7 +258,7 @@ const styles = StyleSheet.create({
   packagePrice: {
     fontSize: 18,
     fontWeight: '600',
-    color: colors.primaryLight,
+    color: colors.accent,
   },
   restoreBtn: {
     marginTop: 16,

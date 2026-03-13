@@ -77,7 +77,7 @@ export function DreamBackground({ children, style }: DreamBackgroundProps) {
   return (
     <View style={[styles.container, style]}>
       <LinearGradient
-        colors={['#0A0A1A', '#120a1f', '#1A0A2E', '#0d0a18', '#0A0A1A']}
+        colors={['#0D0A14', '#150D20', '#1A0F28', '#120A1A', '#0D0A14']}
         locations={[0, 0.25, 0.5, 0.75, 1]}
         style={StyleSheet.absoluteFill}
       />
@@ -96,8 +96,8 @@ export function DreamBackground({ children, style }: DreamBackgroundProps) {
             r="0.4"
             gradientUnits="objectBoundingBox"
           >
-            <Stop offset="0" stopColor="#A855F7" stopOpacity="0.12" />
-            <Stop offset="1" stopColor="#A855F7" stopOpacity="0" />
+            <Stop offset="0" stopColor="#F97316" stopOpacity="0.08" />
+            <Stop offset="1" stopColor="#F97316" stopOpacity="0" />
           </RadialGradient>
           <RadialGradient
             id="orbGlow"
@@ -106,8 +106,8 @@ export function DreamBackground({ children, style }: DreamBackgroundProps) {
             r="0.35"
             gradientUnits="objectBoundingBox"
           >
-            <Stop offset="0" stopColor="#7C3AED" stopOpacity="0.1" />
-            <Stop offset="1" stopColor="#7C3AED" stopOpacity="0" />
+            <Stop offset="0" stopColor="#A855F7" stopOpacity="0.12" />
+            <Stop offset="1" stopColor="#A855F7" stopOpacity="0" />
           </RadialGradient>
         </Defs>
         <Rect x="0" y="0" width="100%" height="100%" fill="url(#moonGlow)" />

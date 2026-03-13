@@ -45,6 +45,10 @@
     "deleteAccountConfirmMessage": "Ваш аккаунт будет удалён. Это действие нельзя отменить. Вы уверены?",
     "deleteAccountSuccess": "Ваш аккаунт удалён",
     "defaultUsername": "Путешественник снов",
+    "editName": "Изменить имя",
+    "editNamePlaceholder": "Введите ваше имя",
+    "nameUpdated": "Имя обновлено",
+    "nameUpdateError": "Не удалось обновить имя",
     "languageUpdated": "Язык обновлён",
     "languageUpdateError": "Не удалось обновить язык"
   },

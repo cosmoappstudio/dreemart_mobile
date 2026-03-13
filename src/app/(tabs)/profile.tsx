@@ -12,6 +12,7 @@ import {
   Pressable,
   ScrollView,
   StyleSheet,
+  TextInput,
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -25,7 +26,7 @@ import { useDreams } from '../../hooks/useDreams';
 import { useDreemartRevenueCat } from '../../contexts/dreemart-revenuecat-context';
 import { useToast } from 'heroui-native';
 import { PaywallModal } from '../../components/PaywallModal';
-import { colors } from '../../constants/theme';
+import { colors, gradients } from '../../constants/theme';
 import { useTranslation } from 'react-i18next';
 import {
   setLanguage,
@@ -60,6 +61,8 @@ export default function ProfileScreen() {
   const { t } = useTranslation();
   const [showPaywall, setShowPaywall] = useState(false);
   const [showLangPicker, setShowLangPicker] = useState(false);
+  const [showEditName, setShowEditName] = useState(false);
+  const [editNameValue, setEditNameValue] = useState('');
   const insets = useSafeAreaInsets();
   const { userId, refreshAuth } = useAuth();
   const { credits, refetch: refetchCredits } = useCredits(userId);
@@ -84,6 +87,29 @@ export default function ProfileScreen() {
     profile?.tier === 'paid' || profile?.tier === 'pro'
       ? t('profile.proPlan')
       : t('profile.freePlan');
+
+  const openEditName = useCallback(() => {
+    setEditNameValue(profile?.username ?? '');
+    setShowEditName(true);
+  }, [profile?.username]);
+
+  const handleSaveName = useCallback(async () => {
+    const trimmed = editNameValue.trim();
+    if (!trimmed || !userId) return;
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ username: trimmed, updated_at: new Date().toISOString() })
+        .eq('id', userId);
+      if (error) throw error;
+      await refetchProfile();
+      setShowEditName(false);
+      toast.show({ label: t('profile.nameUpdated'), variant: 'success' });
+    } catch (e) {
+      console.error('Name update error:', e);
+      toast.show({ label: t('profile.nameUpdateError'), variant: 'danger' });
+    }
+  }, [editNameValue, userId, refetchProfile, toast, t]);
 
   const handleLanguageChange = useCallback(
     async (lng: SupportedLanguage) => {
@@ -148,7 +174,7 @@ export default function ProfileScreen() {
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <View style={styles.headerIconWrap}>
-            <Ionicons name="moon" size={20} color={colors.primaryLight} />
+            <Ionicons name="moon" size={20} color={colors.accent} />
           </View>
           <AppText style={styles.title}>{t('profile.title')}</AppText>
         </View>
@@ -167,22 +193,30 @@ export default function ProfileScreen() {
       >
         {/* Hero */}
         <View style={styles.hero}>
-          <View style={styles.avatarRing}>
-            <View style={styles.avatar}>
-              <AppText style={styles.avatarText}>
-                {(profile?.username ?? 'R')[0].toUpperCase()}
-              </AppText>
+          <Pressable
+            onPress={openEditName}
+            style={({ pressed }) => [styles.heroPressable, pressed && { opacity: 0.9 }]}
+          >
+            <View style={styles.avatarRing}>
+              <View style={styles.avatar}>
+                <AppText style={styles.avatarText}>
+                  {(profile?.username ?? 'R')[0].toUpperCase()}
+                </AppText>
+              </View>
             </View>
-          </View>
-          <AppText style={styles.username}>
-            {profile?.username ?? t('profile.defaultUsername')}
-          </AppText>
+            <View style={styles.usernameRow}>
+              <AppText style={styles.username}>
+                {profile?.username ?? t('profile.defaultUsername')}
+              </AppText>
+              <Ionicons name="pencil" size={16} color={colors.textMuted} />
+            </View>
+          </Pressable>
           <View style={styles.badgeRow}>
             <View style={styles.tierBadge}>
               <AppText style={styles.tierText}>{tierLabel}</AppText>
             </View>
             <View style={styles.levelBadge}>
-              <Ionicons name="sparkles" size={12} color={colors.primaryLight} />
+              <Ionicons name="sparkles" size={12} color={colors.accent} />
               <AppText style={styles.levelText}>{t(`levels.${levelKey}`)}</AppText>
             </View>
           </View>
@@ -224,12 +258,12 @@ export default function ProfileScreen() {
           onPress={() => setShowPaywall(true)}
         >
           <LinearGradient
-            colors={['#7C3AED', '#A855F7']}
+            colors={gradients.primaryAccent}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 0 }}
             style={styles.ctaGradient}
           >
-            <Ionicons name="flash" size={20} color="#fff" />
+            <Ionicons name="flash" size={20} color={colors.text} />
             <AppText style={styles.ctaText}>{t('profile.getCredits')}</AppText>
           </LinearGradient>
         </Pressable>
@@ -293,6 +327,58 @@ export default function ProfileScreen() {
       />
 
       <Modal
+        visible={showEditName}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowEditName(false)}
+      >
+        <Pressable
+          style={styles.langModalOverlay}
+          onPress={() => setShowEditName(false)}
+        >
+          <Pressable style={styles.editNamePicker} onPress={(e) => e.stopPropagation()}>
+            {Platform.OS === 'ios' ? (
+              <BlurView intensity={60} tint="dark" style={StyleSheet.absoluteFill} />
+            ) : (
+              <View style={styles.langPickerBg} />
+            )}
+            <View style={styles.editNameContent}>
+              <View style={styles.langPickerHeader}>
+                <Ionicons name="person" size={22} color={colors.accent} />
+                <AppText style={styles.langPickerTitle}>{t('profile.editName')}</AppText>
+              </View>
+              <TextInput
+                style={styles.editNameInput}
+                value={editNameValue}
+                onChangeText={setEditNameValue}
+                placeholder={t('profile.editNamePlaceholder')}
+                placeholderTextColor={colors.textMuted}
+                autoFocus
+                maxLength={30}
+              />
+              <View style={styles.editNameActions}>
+                <Pressable
+                  style={styles.editNameCancel}
+                  onPress={() => setShowEditName(false)}
+                >
+                  <AppText style={styles.langCancelText}>{t('generation.back')}</AppText>
+                </Pressable>
+                <Pressable
+                  style={({ pressed }) => [
+                    styles.editNameSave,
+                    pressed && { opacity: 0.9 },
+                  ]}
+                  onPress={handleSaveName}
+                >
+                  <AppText style={styles.editNameSaveText}>{t('generation.save')}</AppText>
+                </Pressable>
+              </View>
+            </View>
+          </Pressable>
+        </Pressable>
+      </Modal>
+
+      <Modal
         visible={showLangPicker}
         transparent
         animationType="fade"
@@ -310,7 +396,7 @@ export default function ProfileScreen() {
             )}
             <View style={styles.langPickerContent}>
               <View style={styles.langPickerHeader}>
-                <Ionicons name="language" size={22} color={colors.primaryLight} />
+                <Ionicons name="language" size={22} color={colors.accent} />
                 <AppText style={styles.langPickerTitle}>{t('profile.language')}</AppText>
               </View>
               {SUPPORTED_LANGUAGES.map((lng) => (
@@ -360,7 +446,7 @@ function ProfileMenuItem({
   onPress: () => void;
   destructive?: boolean;
 }) {
-  const iconColor = destructive ? colors.error : colors.primaryLight;
+  const iconColor = destructive ? colors.error : colors.accent;
   const textColor = destructive ? colors.error : colors.text;
   const iconBg = destructive ? 'rgba(239,68,68,0.15)' : 'rgba(124,58,237,0.2)';
 
@@ -436,6 +522,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(124, 58, 237, 0.2)',
   },
+  heroPressable: {
+    alignItems: 'center',
+  },
+  usernameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 8,
+  },
   avatarRing: {
     padding: 3,
     borderRadius: 50,
@@ -448,21 +543,20 @@ const styles = StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 36,
-    backgroundColor: 'rgba(124, 58, 237, 0.35)',
+    backgroundColor: 'rgba(249, 115, 22, 0.25)',
     alignItems: 'center',
     justifyContent: 'center',
   },
   avatarText: {
     fontSize: 28,
     fontWeight: '700',
-    color: colors.primaryLight,
+    color: colors.accent,
     letterSpacing: -0.5,
   },
   username: {
     fontSize: 20,
     fontWeight: '700',
     color: colors.text,
-    marginBottom: 8,
   },
   badgeRow: {
     flexDirection: 'row',
@@ -489,12 +583,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 5,
     borderRadius: 20,
-    backgroundColor: 'rgba(124, 58, 237, 0.25)',
+    backgroundColor: 'rgba(249, 115, 22, 0.2)',
   },
   levelText: {
     fontSize: 13,
     fontWeight: '600',
-    color: colors.primaryLight,
+    color: colors.accent,
   },
   dreamerId: {
     fontSize: 11,
@@ -640,5 +734,47 @@ const styles = StyleSheet.create({
   langCancelText: {
     fontSize: 14,
     color: colors.textMuted,
+  },
+  editNamePicker: {
+    borderRadius: 24,
+    overflow: 'hidden',
+    width: '100%',
+    maxWidth: 320,
+  },
+  editNameContent: {
+    padding: 20,
+  },
+  editNameInput: {
+    backgroundColor: 'rgba(124, 58, 237, 0.15)',
+    borderRadius: 12,
+    padding: 16,
+    fontSize: 16,
+    color: colors.text,
+    borderWidth: 1,
+    borderColor: 'rgba(124, 58, 237, 0.3)',
+    marginBottom: 20,
+  },
+  editNameActions: {
+    flexDirection: 'row',
+    gap: 12,
+  },
+  editNameCancel: {
+    flex: 1,
+    padding: 16,
+    alignItems: 'center',
+    borderRadius: 12,
+    backgroundColor: 'rgba(255,255,255,0.08)',
+  },
+  editNameSave: {
+    flex: 1,
+    padding: 16,
+    alignItems: 'center',
+    borderRadius: 12,
+    backgroundColor: colors.accent,
+  },
+  editNameSaveText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.background,
   },
 });

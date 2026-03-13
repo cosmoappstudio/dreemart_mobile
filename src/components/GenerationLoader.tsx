@@ -60,7 +60,7 @@ export function GenerationLoader() {
     <View style={styles.container}>
       <Animated.View style={[styles.iconRing, iconStyle]}>
         <View style={styles.iconWrapper}>
-          <Ionicons name="brush" size={44} color={colors.primaryLight} />
+          <Ionicons name="brush" size={44} color={colors.accent} />
           <View style={styles.sparkleWrap}>
             <Ionicons name="sparkles" size={18} color={colors.accent} />
           </View>
@@ -88,14 +88,14 @@ const styles = StyleSheet.create({
     padding: 4,
     borderRadius: 58,
     borderWidth: 2,
-    borderColor: 'rgba(168, 85, 247, 0.45)',
+    borderColor: 'rgba(249, 115, 22, 0.45)',
     marginBottom: 28,
   },
   iconWrapper: {
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: 'rgba(124, 58, 237, 0.28)',
+    backgroundColor: 'rgba(249, 115, 22, 0.2)',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'relative',
@@ -126,6 +126,6 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: colors.primaryLight,
+    backgroundColor: colors.accent,
   },
 });

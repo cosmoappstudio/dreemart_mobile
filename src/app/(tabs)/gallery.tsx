@@ -33,7 +33,7 @@ export default function GalleryScreen() {
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <View style={styles.headerIconWrap}>
-            <Ionicons name="images" size={20} color={colors.primaryLight} />
+            <Ionicons name="images" size={20} color={colors.accent} />
           </View>
           <AppText style={styles.title}>{t('gallery.title')}</AppText>
         </View>
@@ -41,7 +41,7 @@ export default function GalleryScreen() {
 
       {loading ? (
         <View style={styles.loading}>
-          <ActivityIndicator size="large" color={colors.primaryLight} />
+          <ActivityIndicator size="large" color={colors.accent} />
           <AppText style={styles.loadingText}>{t('gallery.loading')}</AppText>
         </View>
       ) : (
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 10,
-    backgroundColor: 'rgba(124, 58, 237, 0.25)',
+    backgroundColor: 'rgba(249, 115, 22, 0.25)',
     alignItems: 'center',
     justifyContent: 'center',
   },

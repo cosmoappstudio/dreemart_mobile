@@ -1,14 +1,30 @@
+import { Platform } from 'react-native';
 import Purchases, { LOG_LEVEL } from 'react-native-purchases';
 
+const IOS_KEY = process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY;
+const ANDROID_KEY = process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY;
+
+const REVENUECAT_IOS_ENABLED =
+  IOS_KEY && IOS_KEY !== '<revenuecat_ios_key>';
+const REVENUECAT_ANDROID_ENABLED =
+  ANDROID_KEY && ANDROID_KEY !== '<revenuecat_android_key>';
+
 const REVENUECAT_ENABLED =
-  process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY &&
-  process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY !== '<revenuecat_ios_key>';
+  (Platform.OS === 'ios' && REVENUECAT_IOS_ENABLED) ||
+  (Platform.OS === 'android' && REVENUECAT_ANDROID_ENABLED);
+
+function getApiKey(): string | undefined {
+  if (Platform.OS === 'ios') return IOS_KEY;
+  if (Platform.OS === 'android') return ANDROID_KEY;
+  return IOS_KEY ?? ANDROID_KEY;
+}
 
 export function initRevenueCat(userId: string) {
-  if (!REVENUECAT_ENABLED) return;
+  const apiKey = getApiKey();
+  if (!apiKey || !REVENUECAT_ENABLED) return;
   Purchases.setLogLevel(LOG_LEVEL.VERBOSE);
   Purchases.configure({
-    apiKey: process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY!,
+    apiKey,
     appUserID: userId,
   });
 }

@@ -45,6 +45,10 @@
     "deleteAccountConfirmMessage": "Hesabınız silinecek. Bu işlem geri alınamaz. Devam etmek istiyor musunuz?",
     "deleteAccountSuccess": "Hesabınız silindi",
     "defaultUsername": "Rüya Yolcusu",
+    "editName": "İsim Değiştir",
+    "editNamePlaceholder": "İsminizi girin",
+    "nameUpdated": "İsim güncellendi",
+    "nameUpdateError": "İsim güncellenemedi",
     "languageUpdated": "Dil güncellendi",
     "languageUpdateError": "Dil güncellenemedi"
   },

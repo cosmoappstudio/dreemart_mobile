@@ -1,23 +1,26 @@
+/** Turuncu / Mor / Beyaz uyumlu palet */
 export const colors = {
-  background: '#0A0A1A',
-  surface: '#12122A',
-  surfaceLight: '#1A1A35',
+  background: '#0D0A14',
+  surface: '#15101F',
+  surfaceLight: '#1E1528',
   primary: '#7C3AED',
   primaryLight: '#A855F7',
-  accent: '#F59E0B',
-  accentYellow: '#FBBF24',
-  text: '#F1F5F9',
-  textMuted: '#94A3B8',
-  border: '#1E1E3F',
+  accent: '#F97316',
+  accentLight: '#FB923C',
+  text: '#FFFFFF',
+  textMuted: '#C4B5FD',
+  border: '#2E1F3D',
   error: '#EF4444',
   success: '#10B981',
   locked: '#374151',
 };
 
 export const gradients = {
-  background: ['#0A0A1A', '#1A0A2E', '#0A0A1A'] as const,
+  background: ['#0D0A14', '#1A0F28', '#0D0A14'] as const,
   primary: ['#7C3AED', '#A855F7'] as const,
-  card: ['#12122A', '#1A1A35'] as const,
+  accent: ['#F97316', '#FB923C'] as const,
+  primaryAccent: ['#7C3AED', '#F97316'] as const,
+  card: ['#15101F', '#1E1528'] as const,
 };
 
 export const spacing = {

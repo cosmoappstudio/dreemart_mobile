@@ -126,7 +126,7 @@ export function DreamDetailSwipe({
             alwaysBounceVertical={true}
           >
             <View style={styles.interpretationHeader}>
-              <Ionicons name="sparkles" size={18} color={colors.primaryLight} />
+              <Ionicons name="sparkles" size={18} color={colors.accent} />
               <AppText style={styles.interpretationLabel}>{t('dreamDetail.interpretation')}</AppText>
             </View>
             <AppText style={styles.interpretationText}>
@@ -140,7 +140,7 @@ export function DreamDetailSwipe({
         {artistName && (
           <View style={styles.footerMeta}>
             <View style={styles.artistBadge}>
-              <Ionicons name="brush" size={14} color={colors.primaryLight} />
+                <Ionicons name="brush" size={14} color={colors.accent} />
               <AppText style={styles.artistName}>{artistName}</AppText>
             </View>
             <AppText style={styles.date}>
@@ -157,7 +157,7 @@ export function DreamDetailSwipe({
           onPress={handleSave}
         >
           <View style={styles.actionIconWrap}>
-            <Ionicons name="download" size={18} color={colors.primaryLight} />
+            <Ionicons name="download" size={18} color={colors.accent} />
           </View>
           <AppText style={styles.actionBtnText}>{t('dreamDetail.download')}</AppText>
         </Pressable>
@@ -170,7 +170,7 @@ export function DreamDetailSwipe({
           onPress={handleShare}
         >
           <View style={styles.actionIconWrap}>
-            <Ionicons name="share" size={18} color={colors.primaryLight} />
+            <Ionicons name="share" size={18} color={colors.accent} />
           </View>
           <AppText style={styles.actionBtnText}>{t('dreamDetail.share')}</AppText>
         </Pressable>
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.3)',
   },
   dotActive: {
-    backgroundColor: colors.primaryLight,
+    backgroundColor: colors.accent,
     width: 24,
   },
 });

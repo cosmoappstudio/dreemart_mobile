@@ -30,7 +30,7 @@ import { useDreemartRevenueCat } from '../../contexts/dreemart-revenuecat-contex
 import { useArtists } from '../../hooks/useArtists';
 import { useProfileContext } from '../../contexts/profile-context';
 import { Analytics } from '../../lib/amplitude';
-import { colors } from '../../constants/theme';
+import { colors, gradients } from '../../constants/theme';
 import { PaywallModal } from '../../components/PaywallModal';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -154,7 +154,7 @@ export default function OnboardingScreen() {
       <View style={styles.header}>
         <View style={styles.headerLeft}>
           <View style={styles.headerIconWrap}>
-            <Ionicons name="moon" size={20} color={colors.primaryLight} />
+            <Ionicons name="moon" size={20} color={colors.accent} />
           </View>
           <AppText style={styles.headerTitle}>Dreemart</AppText>
         </View>
@@ -222,7 +222,7 @@ export default function OnboardingScreen() {
               <Ionicons
                 name={current.icon}
                 size={isNotificationStep ? 64 : 56}
-                color={colors.primaryLight}
+                color={colors.accent}
               />
             </View>
           </Animated.View>
@@ -244,12 +244,12 @@ export default function OnboardingScreen() {
               onPress={handleEnableNotifications}
             >
               <LinearGradient
-                colors={['#7C3AED', '#A855F7']}
+                colors={gradients.primaryAccent}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 style={styles.buttonGradient}
               >
-                <Ionicons name="notifications" size={20} color="#fff" />
+                <Ionicons name="notifications" size={20} color={colors.text} />
                 <AppText style={styles.buttonText}>
                   {t('onboarding.enableNotifications')}
                 </AppText>
@@ -274,7 +274,7 @@ export default function OnboardingScreen() {
             onPress={handleNext}
           >
             <LinearGradient
-              colors={['#7C3AED', '#A855F7']}
+              colors={gradients.primaryAccent}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
               style={styles.buttonGradient}
@@ -283,7 +283,7 @@ export default function OnboardingScreen() {
                 {isLastStep ? t('onboarding.start') : t('onboarding.next')}
               </AppText>
               {!isLastStep && (
-                <Ionicons name="chevron-forward" size={20} color="#fff" />
+                <Ionicons name="chevron-forward" size={20} color={colors.text} />
               )}
             </LinearGradient>
           </Pressable>
@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
     width: 36,
     height: 36,
     borderRadius: 10,
-    backgroundColor: 'rgba(124, 58, 237, 0.25)',
+    backgroundColor: 'rgba(249, 115, 22, 0.25)',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.25)',
   },
   dotActive: {
-    backgroundColor: colors.primaryLight,
+    backgroundColor: colors.accent,
     width: 24,
   },
   content: {
@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginBottom: 28,
     borderWidth: 2,
-    borderColor: 'rgba(168, 85, 247, 0.3)',
+    borderColor: 'rgba(249, 115, 22, 0.35)',
   },
   previewImage: {
     width: '100%',
@@ -383,8 +383,8 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     overflow: 'hidden',
     borderWidth: 2,
-    borderColor: 'rgba(168, 85, 247, 0.4)',
-    backgroundColor: 'rgba(124, 58, 237, 0.2)',
+    borderColor: 'rgba(249, 115, 22, 0.4)',
+    backgroundColor: 'rgba(124, 58, 237, 0.15)',
   },
   artistGridImage: {
     width: '100%',
@@ -401,14 +401,14 @@ const styles = StyleSheet.create({
     padding: 4,
     borderRadius: 70,
     borderWidth: 2,
-    borderColor: 'rgba(168, 85, 247, 0.4)',
+    borderColor: 'rgba(249, 115, 22, 0.4)',
     marginBottom: 28,
   },
   iconWrapper: {
     width: 120,
     height: 120,
     borderRadius: 60,
-    backgroundColor: 'rgba(124, 58, 237, 0.25)',
+    backgroundColor: 'rgba(249, 115, 22, 0.2)',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -447,7 +447,7 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#fff',
+    color: colors.text,
   },
   notificationFooter: {
     width: '100%',

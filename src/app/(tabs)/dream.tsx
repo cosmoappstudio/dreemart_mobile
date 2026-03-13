@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { useFocusEffect, useRouter } from 'expo-router';
+import { LinearGradient } from 'expo-linear-gradient';
 import { DreamBackground } from '../../components/DreamBackground';
 import { useCallback, useState } from 'react';
 import {
@@ -23,7 +24,7 @@ import { useProfileContext } from '../../contexts/profile-context';
 import { useDreemartRevenueCat } from '../../contexts/dreemart-revenuecat-context';
 import { PaywallModal } from '../../components/PaywallModal';
 import { Analytics } from '../../lib/amplitude';
-import { colors } from '../../constants/theme';
+import { colors, gradients } from '../../constants/theme';
 import type { Artist } from '../../types';
 import { useTranslation } from 'react-i18next';
 import { useToast } from 'heroui-native';
@@ -188,12 +189,17 @@ export default function DreamScreen() {
             ]}
             onPress={handleCreate}
           >
-            <View style={styles.createBtnInner}>
-              <Ionicons name="sparkles" size={22} color="#0A0A1A" />
+            <LinearGradient
+              colors={gradients.primaryAccent}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.createBtnInner}
+            >
+              <Ionicons name="sparkles" size={22} color={colors.text} />
               <AppText style={styles.createBtnText}>
                 {t('dream.createBtn', { count: creditCost })}
               </AppText>
-            </View>
+            </LinearGradient>
           </Pressable>
 
           <AppText style={styles.hint}>{t('dream.hint')}</AppText>
@@ -320,7 +326,6 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     overflow: 'hidden',
     marginTop: 8,
-    backgroundColor: colors.accent,
   },
   createBtnPressed: {
     opacity: 0.9,
@@ -335,7 +340,7 @@ const styles = StyleSheet.create({
   createBtnText: {
     fontSize: 17,
     fontWeight: '700',
-    color: '#0A0A1A',
+    color: colors.text,
   },
   hint: {
     fontSize: 13,

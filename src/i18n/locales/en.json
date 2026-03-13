@@ -45,6 +45,10 @@
     "deleteAccountConfirmMessage": "Your account will be deleted. This action cannot be undone. Are you sure you want to continue?",
     "deleteAccountSuccess": "Your account has been deleted",
     "defaultUsername": "Dream Traveler",
+    "editName": "Change Name",
+    "editNamePlaceholder": "Enter your name",
+    "nameUpdated": "Name updated",
+    "nameUpdateError": "Failed to update name",
     "languageUpdated": "Language updated",
     "languageUpdateError": "Failed to update language"
   },
