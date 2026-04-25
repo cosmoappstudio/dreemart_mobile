@@ -50,7 +50,8 @@
     "nameUpdated": "Имя обновлено",
     "nameUpdateError": "Не удалось обновить имя",
     "languageUpdated": "Язык обновлён",
-    "languageUpdateError": "Не удалось обновить язык"
+    "languageUpdateError": "Не удалось обновить язык",
+    "startOnboardingDev": "Запустить онбординг (тест)"
   },
   "levels": {
     "new": "Новый сновидец",
@@ -105,7 +106,7 @@
   },
   "errors": {
     "insufficientCredits": "Недостаточно кредитов",
-    "artistLocked": "Этот художник недоступен в бесплатном плане"
+    "artistLocked": "Нужны кредиты для этого художника"
   },
   "common": {
     "permissionRequired": "Требуется разрешение",

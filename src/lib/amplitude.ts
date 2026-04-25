@@ -1,28 +1,48 @@
-import { init, track } from '@amplitude/analytics-react-native';
+import { init, setUserId, track } from '@amplitude/analytics-react-native';
 import type { PaywallSource } from '../types';
 
 export function initAmplitude() {
-  const key = process.env.EXPO_PUBLIC_AMPLITUDE_API_KEY;
-  if (key) {
-    init(key, undefined, {
-      trackingOptions: { ipAddress: false },
-    });
+  try {
+    const key = process.env.EXPO_PUBLIC_AMPLITUDE_API_KEY;
+    if (key) {
+      init(key, undefined, {
+        trackingOptions: { ipAddress: false },
+      });
+    }
+  } catch (e) {
+    console.warn('Amplitude init error:', e);
+  }
+}
+
+export function setAmplitudeUserId(userId: string) {
+  try {
+    setUserId(userId);
+  } catch (e) {
+    console.warn('Amplitude setUserId error:', e);
+  }
+}
+
+function safeTrack(name: string, props?: Record<string, unknown>) {
+  try {
+    track(name, props);
+  } catch {
+    /* Amplitude may fail in Expo Go */
   }
 }
 
 export const Analytics = {
-  appOpened: () => track('app_opened'),
-  onboardingCompleted: () => track('onboarding_completed'),
+  appOpened: () => safeTrack('app_opened'),
+  onboardingCompleted: () => safeTrack('onboarding_completed'),
   dreamSubmitted: (artistId: string) =>
-    track('dream_submitted', { artist_id: artistId }),
+    safeTrack('dream_submitted', { artist_id: artistId }),
   dreamGenerated: (dreamId: string) =>
-    track('dream_generated', { dream_id: dreamId }),
-  dreamSaved: () => track('dream_saved'),
+    safeTrack('dream_generated', { dream_id: dreamId }),
+  dreamSaved: () => safeTrack('dream_saved'),
   paywallViewed: (source: PaywallSource) =>
-    track('paywall_viewed', { source }),
+    safeTrack('paywall_viewed', { source }),
   purchaseInitiated: (packageId: string) =>
-    track('purchase_initiated', { package_id: packageId }),
+    safeTrack('purchase_initiated', { package_id: packageId }),
   purchaseCompleted: (packageId: string, credits: number) =>
-    track('purchase_completed', { package_id: packageId, credits }),
-  purchaseRestored: () => track('purchase_restored'),
+    safeTrack('purchase_completed', { package_id: packageId, credits }),
+  purchaseRestored: () => safeTrack('purchase_restored'),
 };

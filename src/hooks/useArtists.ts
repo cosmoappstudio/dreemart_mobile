@@ -11,8 +11,8 @@ function shuffle<T>(arr: T[]): T[] {
   return out;
 }
 
-function isProTier(tier: string | undefined): boolean {
-  return tier === 'paid' || tier === 'pro';
+function hasCredits(credits: number | undefined): boolean {
+  return (credits ?? 0) >= 1;
 }
 
 type UseArtistsOptions = {
@@ -21,7 +21,7 @@ type UseArtistsOptions = {
 
 export function useArtists(
   userId: string | null,
-  tier: string | undefined,
+  credits: number | undefined,
   options?: UseArtistsOptions
 ) {
   const { preserveSortOrder } = options ?? {};
@@ -44,12 +44,12 @@ export function useArtists(
     const list = (data ?? []).map((a) => ({
       ...a,
       is_free: a.is_free ?? false,
-      locked: !isProTier(tier) && !(a.is_free ?? false),
+      locked: !hasCredits(credits) && !(a.is_free ?? false),
     })) as Artist[];
 
     if (preserveSortOrder) {
       setArtists(list);
-    } else if (!isProTier(tier)) {
+    } else if (!hasCredits(credits)) {
       const free = list.filter((a) => a.is_free);
       const locked = list.filter((a) => !a.is_free);
       setArtists([...shuffle(free), ...locked]);
@@ -60,7 +60,7 @@ export function useArtists(
         )
       );
     }
-  }, [tier, preserveSortOrder]);
+  }, [credits, preserveSortOrder]);
 
   useEffect(() => {
     refetch().finally(() => setLoading(false));

@@ -38,7 +38,7 @@ export async function initAnonymousAuth(): Promise<string> {
     const now = new Date().toISOString();
     const { error: insertError } = await supabase.from('profiles').insert({
       id: userId,
-      credits: 1,
+      credits: 0,
       tier: 'free',
       role: 'user',
       language: 'tr',

@@ -22,6 +22,7 @@
     "title": "My Profile",
     "freePlan": "FREE PLAN",
     "proPlan": "PRO",
+    "creditsSummary": "{{count}} credits",
     "remainingCredits": "REMAINING CREDITS",
     "getCredits": "+ Get Credits",
     "generated": "GENERATED",
@@ -41,6 +42,8 @@
     "deleteAccount": "Delete My Account",
     "eula": "EULA",
     "language": "Language",
+    "languageSearchPlaceholder": "Search by language or name…",
+    "languageNoResults": "No matching languages",
     "deleteAccountConfirmTitle": "Delete Account",
     "deleteAccountConfirmMessage": "Your account will be deleted. This action cannot be undone. Are you sure you want to continue?",
     "deleteAccountSuccess": "Your account has been deleted",
@@ -50,7 +53,8 @@
     "nameUpdated": "Name updated",
     "nameUpdateError": "Failed to update name",
     "languageUpdated": "Language updated",
-    "languageUpdateError": "Failed to update language"
+    "languageUpdateError": "Failed to update language",
+    "startOnboardingDev": "Start onboarding (dev)"
   },
   "levels": {
     "new": "New Dreamer",
@@ -67,18 +71,23 @@
     "restore": "Restore Purchases"
   },
   "onboarding": {
-    "step1Title": "Visualize Your Dreams",
-    "step1Desc": "Describe your dreams in text, and AI will turn them into unique works of art.",
-    "step2Title": "40+ Artist Styles",
-    "step2Desc": "Van Gogh, Monet, Dalí and more. Choose a unique artist style for each dream.",
-    "step3Title": "Enable Notifications",
-    "step3Desc": "Get reminders for new dreams and stay updated on special offers.",
-    "step4Title": "Ready to Start?",
-    "step4Desc": "Start now with 1 free credit. Explore our credit packages for more.",
+    "welcomeTitle": "Welcome to Dreemart",
+    "welcomeDesc": "Turn your dreams into stunning AI art. A few quick steps and you're ready.",
+    "languageTitle": "Choose your language",
+    "languageDesc": "You can change this anytime in your profile.",
+    "trackingTitle": "Help us personalize",
+    "trackingDesc": "We use this permission to measure ads and improve the app. You can change it later in Settings.",
+    "trackingAllow": "Continue",
+    "trackingSkip": "Not now",
+    "pushTitle": "Stay in the loop",
+    "pushDesc": "Get gentle reminders and occasional offers — never spam.",
+    "readyTitle": "You're all set",
+    "readyDesc_one": "You have 1 free credit to create your first dream. Unlock more anytime.",
+    "readyDesc_other": "You have {{count}} free credits to create your first dream. Unlock more anytime.",
     "next": "Next",
-    "start": "Start",
-    "enableNotifications": "Enable Notifications",
-    "skip": "Skip"
+    "start": "Continue",
+    "enableNotifications": "Enable notifications",
+    "skip": "Not now"
   },
   "generation": {
     "loading": "Your dream is coming to life...",
@@ -87,6 +96,7 @@
     "save": "Save",
     "share": "Share",
     "back": "Go Back",
+    "close": "Close",
     "newDream": "New Dream",
     "error": "An error occurred",
     "saved": "Saved",
@@ -105,7 +115,7 @@
   },
   "errors": {
     "insufficientCredits": "Insufficient credits",
-    "artistLocked": "This artist is not available on the free plan"
+    "artistLocked": "You need credits to use this artist style"
   },
   "common": {
     "permissionRequired": "Permission Required",

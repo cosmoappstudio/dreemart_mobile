@@ -1,19 +1,27 @@
 {
   "cli": {
-    "version": ">= 12.0.0"
+    "version": ">= 11.0.0",
+    "appVersionSource": "remote"
   },
   "build": {
-    "development": {
+    "ios-simulator": {
+      "node": "20.18.1",
       "developmentClient": true,
       "distribution": "internal",
-      "ios": { "simulator": true }
-    },
-    "preview": {
-      "distribution": "internal",
-      "ios": { "simulator": false }
+      "ios": {
+        "simulator": true
+      }
     },
     "production": {
-      "ios": { "simulator": false }
+      "node": "20.18.1",
+      "distribution": "store",
+      "autoIncrement": true,
+      "ios": {
+        "simulator": false
+      }
     }
+  },
+  "submit": {
+    "production": {}
   }
 }

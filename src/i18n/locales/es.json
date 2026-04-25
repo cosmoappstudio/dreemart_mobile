@@ -1,0 +1,115 @@
+{
+  "tabs": {
+    "dream": "Sueño",
+    "gallery": "Galería",
+    "profile": "Perfil"
+  },
+  "dream": {
+    "title": "DESCRIBE TU SUEÑO",
+    "artistTitle": "ELIGE ARTISTA",
+    "artistSubtitle": "Cada uno cuesta 1 crédito",
+    "placeholder": "Anoche subía una escalera infinita...",
+    "createBtn": "Crea tu pintura ({{count}} crédito)",
+    "hint": "Cuanto más detalles des de tu sueño, mejor será la visualización."
+  },
+  "gallery": {
+    "title": "Galería",
+    "loading": "Cargando...",
+    "empty": "Aún no hay sueños. ¡Crea el primero!",
+    "emptySubtext": "Describe tus sueños, crea tus pinturas"
+  },
+  "profile": {
+    "title": "Mi perfil",
+    "freePlan": "PLAN GRATUITO",
+    "proPlan": "PRO",
+    "remainingCredits": "CRÉDITOS RESTANTES",
+    "getCredits": "+ Obtener créditos",
+    "generated": "GENERADOS",
+    "totalDreams": "Sueños totales",
+    "dreamScore": "PUNTUACIÓN",
+    "dreamScoreFormula": "Sueños totales x 10",
+    "level": "NIVEL",
+    "dreamsCount": "{{count}} sueños",
+    "restorePurchases": "Restaurar compras",
+    "privacyPolicy": "Política de privacidad",
+    "termsOfUse": "Términos de uso",
+    "termsAndConditions": "Términos y condiciones",
+    "privacyAgreement": "Acuerdo de privacidad",
+    "notificationSettings": "Notificaciones",
+    "rateUs": "Valóranos",
+    "support": "Soporte",
+    "deleteAccount": "Eliminar mi cuenta",
+    "eula": "EULA",
+    "language": "Idioma",
+    "deleteAccountConfirmTitle": "Eliminar cuenta",
+    "deleteAccountConfirmMessage": "Tu cuenta se eliminará. No se puede deshacer. ¿Continuar?",
+    "deleteAccountSuccess": "Tu cuenta ha sido eliminada",
+    "defaultUsername": "Viajero onírico",
+    "editName": "Cambiar nombre",
+    "editNamePlaceholder": "Introduce tu nombre",
+    "nameUpdated": "Nombre actualizado",
+    "nameUpdateError": "No se pudo actualizar el nombre",
+    "languageUpdated": "Idioma actualizado",
+    "languageUpdateError": "No se pudo actualizar el idioma",
+    "startOnboardingDev": "Iniciar onboarding (prueba)"
+  },
+  "levels": {
+    "new": "Nuevo soñador",
+    "explorer": "Explorador de sueños",
+    "master": "Maestro de sueños",
+    "virtuoso": "Virtuoso de sueños"
+  },
+  "paywall": {
+    "title": "Paquetes de créditos",
+    "subtitle": "Consigue créditos para visualizar más sueños",
+    "emptyHint": "Puedes ver los paquetes en la página de perfil.",
+    "mostPopular": "Más popular",
+    "credits": "{{count}} créditos",
+    "restore": "Restaurar compras"
+  },
+  "onboarding": {
+    "step1Title": "Visualiza tus sueños",
+    "step1Desc": "Describe tus sueños por texto y la IA los convertirá en obras únicas.",
+    "step2Title": "Más de 40 estilos de artistas",
+    "step2Desc": "Van Gogh, Monet, Dalí y más. Elige un estilo para cada sueño.",
+    "step3Title": "Activar notificaciones",
+    "step3Desc": "Recibe recordatorios y ofertas especiales.",
+    "step4Title": "¿Listo para empezar?",
+    "step4Desc": "Empieza con 1 crédito gratis. Explora nuestros paquetes.",
+    "next": "Siguiente",
+    "start": "Empezar",
+    "enableNotifications": "Activar notificaciones",
+    "skip": "Omitir"
+  },
+  "generation": {
+    "loading": "Tu sueño cobra vida...",
+    "loadingSubtext": "Puede tardar unos segundos",
+    "interpretation": "Interpretación",
+    "save": "Guardar",
+    "share": "Compartir",
+    "back": "Volver",
+    "newDream": "Nuevo sueño",
+    "error": "Ha ocurrido un error",
+    "saved": "Guardado",
+    "saveError": "Error al guardar",
+    "shareNotSupported": "Compartir no disponible",
+    "shareError": "Error al compartir"
+  },
+  "dreamDetail": {
+    "interpretation": "Interpretación del sueño",
+    "download": "Descargar",
+    "share": "Compartir"
+  },
+  "artists": {
+    "loading": "Cargando artistas...",
+    "empty": "No se encontraron artistas."
+  },
+  "errors": {
+    "insufficientCredits": "Créditos insuficientes",
+    "artistLocked": "Necesitas créditos para usar este artista"
+  },
+  "common": {
+    "permissionRequired": "Permiso necesario",
+    "photoLibraryPermission": "Permite el acceso para guardar en la galería de fotos."
+  }
+}

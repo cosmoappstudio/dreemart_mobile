@@ -1,11 +1,12 @@
 import { LinearGradient } from 'expo-linear-gradient';
-import { useEffect } from 'react';
+import { useEffect, type ReactNode } from 'react';
 import { StyleSheet, View } from 'react-native';
 import Animated, {
   useAnimatedProps,
   useSharedValue,
   withRepeat,
   withTiming,
+  type SharedValue,
 } from 'react-native-reanimated';
 import Svg, { Defs, G, Path, RadialGradient, Rect, Stop } from 'react-native-svg';
 
@@ -16,8 +17,10 @@ const SPARKLE_PATH =
   'M 0,-1 L 0.25,-0.25 L 1,0 L 0.25,0.25 L 0,1 L -0.25,0.25 L -1,0 L -0.25,-0.25 Z';
 
 type DreamBackgroundProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   style?: object;
+  /** Sheet/modal gibi sarmalayıcılarda `flex:1` yükseklik çökmesini önlemek için false */
+  fill?: boolean;
 };
 
 const STARS: { cx: number; cy: number; r: number; baseOpacity: number; phase: number }[] = [
@@ -42,7 +45,7 @@ function TwinklingStar({
   progress,
 }: {
   star: (typeof STARS)[0];
-  progress: Animated.SharedValue<number>;
+  progress: SharedValue<number>;
 }) {
   const animatedProps = useAnimatedProps(() => {
     'worklet';
@@ -63,7 +66,7 @@ function TwinklingStar({
   );
 }
 
-export function DreamBackground({ children, style }: DreamBackgroundProps) {
+export function DreamBackground({ children, style, fill = true }: DreamBackgroundProps) {
   const progress = useSharedValue(0);
 
   useEffect(() => {
@@ -75,7 +78,7 @@ export function DreamBackground({ children, style }: DreamBackgroundProps) {
   }, [progress]);
 
   return (
-    <View style={[styles.container, style]}>
+    <View style={[fill ? styles.container : styles.containerNoFill, style]}>
       <LinearGradient
         colors={['#0D0A14', '#150D20', '#1A0F28', '#120A1A', '#0D0A14']}
         locations={[0, 0.25, 0.5, 0.75, 1]}
@@ -124,5 +127,8 @@ export function DreamBackground({ children, style }: DreamBackgroundProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  containerNoFill: {
+    width: '100%',
   },
 });

@@ -7,8 +7,7 @@ import React, {
 } from 'react';
 import { supabase } from '../lib/supabase';
 import type { Profile } from '../types';
-import { setLanguage, SUPPORTED_LANGUAGES } from '../i18n';
-import type { SupportedLanguage } from '../i18n';
+import { isSupportedLanguage, setLanguage } from '../i18n';
 
 type ProfileContextType = {
   profile: Profile | null;
@@ -68,8 +67,8 @@ export function ProfileProvider({
 
   useEffect(() => {
     const lang = profile?.language;
-    if (lang && SUPPORTED_LANGUAGES.includes(lang as SupportedLanguage)) {
-      setLanguage(lang as SupportedLanguage);
+    if (lang && isSupportedLanguage(lang)) {
+      setLanguage(lang);
     }
   }, [profile?.language]);
 

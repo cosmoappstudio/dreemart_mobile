@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { DreamBackground } from '../../components/DreamBackground';
-import { useFocusEffect } from 'expo-router';
+import { useFocusEffect, useRouter } from 'expo-router';
 import { useCallback, useState } from 'react';
 import {
   Alert,
@@ -21,16 +21,18 @@ import { AppText } from '../../components/app-text';
 import { useAuth } from '../../contexts/auth-context';
 import { useAppConfig } from '../../hooks/useAppConfig';
 import { useCredits } from '../../hooks/useCredits';
+import { useOnboarding } from '../../contexts/onboarding-context';
 import { useProfileContext } from '../../contexts/profile-context';
 import { useDreams } from '../../hooks/useDreams';
 import { useDreemartRevenueCat } from '../../contexts/dreemart-revenuecat-context';
 import { useToast } from 'heroui-native';
-import { PaywallModal } from '../../components/PaywallModal';
+import { LanguagePickerModal } from '../../components/LanguagePickerModal';
 import { colors, gradients } from '../../constants/theme';
 import { useTranslation } from 'react-i18next';
 import {
+  getCurrentLanguage,
+  LANGUAGE_LABELS,
   setLanguage,
-  SUPPORTED_LANGUAGES,
   type SupportedLanguage,
 } from '../../i18n';
 import { supabase } from '../../lib/supabase';
@@ -51,15 +53,8 @@ function getDreamScore(dreamCount: number): number {
   return dreamCount * 10;
 }
 
-const LANGUAGE_LABELS: Record<SupportedLanguage, string> = {
-  tr: 'Türkçe',
-  en: 'English',
-  ru: 'Русский',
-};
-
 export default function ProfileScreen() {
   const { t } = useTranslation();
-  const [showPaywall, setShowPaywall] = useState(false);
   const [showLangPicker, setShowLangPicker] = useState(false);
   const [showEditName, setShowEditName] = useState(false);
   const [editNameValue, setEditNameValue] = useState('');
@@ -69,8 +64,10 @@ export default function ProfileScreen() {
   const { profile, refetch: refetchProfile } = useProfileContext();
   const { dreams } = useDreams(userId);
   const { toast } = useToast();
-  const { packages, isInitialized, restorePurchases } = useDreemartRevenueCat();
+  const { restorePurchases, presentRevenueCatPaywall } = useDreemartRevenueCat();
   const { config: appConfig, refetch: refetchAppConfig } = useAppConfig();
+  const { setOnboardingDone } = useOnboarding();
+  const router = useRouter();
 
   useFocusEffect(
     useCallback(() => {
@@ -83,11 +80,6 @@ export default function ProfileScreen() {
   const dreamCount = dreams.length;
   const dreamScore = getDreamScore(dreamCount);
   const levelKey = getLevelKey(dreamCount);
-  const tierLabel =
-    profile?.tier === 'paid' || profile?.tier === 'pro'
-      ? t('profile.proPlan')
-      : t('profile.freePlan');
-
   const openEditName = useCallback(() => {
     setEditNameValue(profile?.username ?? '');
     setShowEditName(true);
@@ -144,6 +136,11 @@ export default function ProfileScreen() {
       console.error('Restore error:', e);
     }
   }, [userId, restorePurchases, refetchProfile, refetchCredits]);
+
+  const handleStartOnboardingDev = useCallback(async () => {
+    await setOnboardingDone(false);
+    router.replace('/onboarding');
+  }, [setOnboardingDone, router]);
 
   const handleDeleteAccount = useCallback(() => {
     Alert.alert(
@@ -213,7 +210,10 @@ export default function ProfileScreen() {
           </Pressable>
           <View style={styles.badgeRow}>
             <View style={styles.tierBadge}>
-              <AppText style={styles.tierText}>{tierLabel}</AppText>
+              <Ionicons name="flash" size={13} color={colors.accent} />
+              <AppText style={styles.tierText}>
+                {t('profile.creditsSummary', { count: credits })}
+              </AppText>
             </View>
             <View style={styles.levelBadge}>
               <Ionicons name="sparkles" size={12} color={colors.accent} />
@@ -231,7 +231,7 @@ export default function ProfileScreen() {
         <View style={styles.statsRow}>
           <Pressable
             style={({ pressed }) => [styles.statPill, pressed && { opacity: 0.8 }]}
-            onPress={() => setShowPaywall(true)}
+            onPress={() => void presentRevenueCatPaywall('profile')}
           >
             <Ionicons name="flash" size={16} color={colors.accent} />
             <AppText style={styles.statPillValue}>{credits}</AppText>
@@ -255,7 +255,7 @@ export default function ProfileScreen() {
             styles.ctaBtn,
             pressed && styles.ctaBtnPressed,
           ]}
-          onPress={() => setShowPaywall(true)}
+          onPress={() => void presentRevenueCatPaywall('profile')}
         >
           <LinearGradient
             colors={gradients.primaryAccent}
@@ -268,11 +268,27 @@ export default function ProfileScreen() {
           </LinearGradient>
         </Pressable>
 
+        {__DEV__ ? (
+          <Pressable
+            style={({ pressed }) => [
+              styles.devOnboardingBtn,
+              pressed && { opacity: 0.85 },
+            ]}
+            onPress={handleStartOnboardingDev}
+          >
+            <Ionicons name="flask" size={18} color={colors.primaryLight} />
+            <AppText style={styles.devOnboardingBtnText}>
+              {t('profile.startOnboardingDev')}
+            </AppText>
+          </Pressable>
+        ) : null}
+
         {/* Menu */}
         <View style={styles.menuSection}>
           <ProfileMenuItem
             icon="language"
             label={t('profile.language')}
+            value={LANGUAGE_LABELS[getCurrentLanguage()]}
             onPress={() => setShowLangPicker(true)}
           />
           <ProfileMenuItem
@@ -318,14 +334,6 @@ export default function ProfileScreen() {
         </AppText>
       </ScrollView>
 
-      <PaywallModal
-        visible={showPaywall}
-        onClose={() => setShowPaywall(false)}
-        source="profile"
-        packages={packages}
-        isInitialized={isInitialized}
-      />
-
       <Modal
         visible={showEditName}
         transparent
@@ -361,7 +369,7 @@ export default function ProfileScreen() {
                   style={styles.editNameCancel}
                   onPress={() => setShowEditName(false)}
                 >
-                  <AppText style={styles.langCancelText}>{t('generation.back')}</AppText>
+                  <AppText style={styles.editNameCancelText}>{t('generation.back')}</AppText>
                 </Pressable>
                 <Pressable
                   style={({ pressed }) => [
@@ -378,50 +386,15 @@ export default function ProfileScreen() {
         </Pressable>
       </Modal>
 
-      <Modal
+      <LanguagePickerModal
         visible={showLangPicker}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setShowLangPicker(false)}
-      >
-        <Pressable
-          style={styles.langModalOverlay}
-          onPress={() => setShowLangPicker(false)}
-        >
-          <Pressable style={styles.langPicker} onPress={(e) => e.stopPropagation()}>
-            {Platform.OS === 'ios' ? (
-              <BlurView intensity={60} tint="dark" style={StyleSheet.absoluteFill} />
-            ) : (
-              <View style={styles.langPickerBg} />
-            )}
-            <View style={styles.langPickerContent}>
-              <View style={styles.langPickerHeader}>
-                <Ionicons name="language" size={22} color={colors.accent} />
-                <AppText style={styles.langPickerTitle}>{t('profile.language')}</AppText>
-              </View>
-              {SUPPORTED_LANGUAGES.map((lng) => (
-                <Pressable
-                  key={lng}
-                  style={({ pressed }) => [
-                    styles.langOption,
-                    pressed && styles.langOptionPressed,
-                  ]}
-                  onPress={() => handleLanguageChange(lng)}
-                >
-                  <AppText style={styles.langOptionText}>{LANGUAGE_LABELS[lng]}</AppText>
-                  <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
-                </Pressable>
-              ))}
-              <Pressable
-                style={styles.langCancel}
-                onPress={() => setShowLangPicker(false)}
-              >
-                <AppText style={styles.langCancelText}>{t('generation.back')}</AppText>
-              </Pressable>
-            </View>
-          </Pressable>
-        </Pressable>
-      </Modal>
+        onClose={() => setShowLangPicker(false)}
+        currentLanguage={getCurrentLanguage()}
+        onSelect={handleLanguageChange}
+        title={t('profile.language')}
+        searchPlaceholder={t('profile.languageSearchPlaceholder')}
+        noResultsText={t('profile.languageNoResults')}
+      />
     </DreamBackground>
   );
 }
@@ -429,6 +402,7 @@ export default function ProfileScreen() {
 function ProfileMenuItem({
   icon,
   label,
+  value,
   onPress,
   destructive,
 }: {
@@ -443,6 +417,7 @@ function ProfileMenuItem({
     | 'shield-checkmark'
     | 'trash';
   label: string;
+  value?: string;
   onPress: () => void;
   destructive?: boolean;
 }) {
@@ -461,7 +436,14 @@ function ProfileMenuItem({
       <View style={[styles.menuIconWrap, { backgroundColor: iconBg }]}>
         <Ionicons name={icon} size={18} color={iconColor} />
       </View>
-      <AppText style={[styles.menuItemText, { color: textColor }]}>{label}</AppText>
+      <View style={styles.menuItemTextCol}>
+        <AppText style={[styles.menuItemText, { color: textColor }]}>{label}</AppText>
+        {value ? (
+          <AppText style={styles.menuItemValue} numberOfLines={1}>
+            {value}
+          </AppText>
+        ) : null}
+      </View>
       <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
     </Pressable>
   );
@@ -566,15 +548,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   tierBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
     paddingHorizontal: 12,
     paddingVertical: 5,
     borderRadius: 20,
-    backgroundColor: 'rgba(16, 185, 129, 0.2)',
+    backgroundColor: 'rgba(249, 115, 22, 0.18)',
   },
   tierText: {
     fontSize: 12,
     fontWeight: '600',
-    color: colors.success,
+    color: colors.accent,
   },
   levelBadge: {
     flexDirection: 'row',
@@ -644,6 +629,23 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: '#fff',
   },
+  devOnboardingBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: 'rgba(168, 85, 247, 0.45)',
+    backgroundColor: 'rgba(124, 58, 237, 0.12)',
+  },
+  devOnboardingBtnText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.primaryLight,
+  },
   menuSection: {
     gap: 6,
   },
@@ -667,10 +669,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  menuItemText: {
+  menuItemTextCol: {
     flex: 1,
+    minWidth: 0,
+  },
+  menuItemText: {
     fontSize: 15,
     color: colors.text,
+  },
+  menuItemValue: {
+    marginTop: 2,
+    fontSize: 12,
+    color: colors.textMuted,
   },
   version: {
     fontSize: 12,
@@ -686,18 +696,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 24,
   },
-  langPicker: {
-    borderRadius: 24,
-    overflow: 'hidden',
-    width: '100%',
-    maxWidth: 320,
-  },
   langPickerBg: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: colors.surface,
-  },
-  langPickerContent: {
-    padding: 20,
   },
   langPickerHeader: {
     flexDirection: 'row',
@@ -709,31 +710,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
     color: colors.text,
-  },
-  langOption: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 6,
-    backgroundColor: 'rgba(124, 58, 237, 0.08)',
-  },
-  langOptionPressed: {
-    opacity: 0.8,
-  },
-  langOptionText: {
-    fontSize: 16,
-    color: colors.text,
-  },
-  langCancel: {
-    padding: 16,
-    alignItems: 'center',
-    marginTop: 8,
-  },
-  langCancelText: {
-    fontSize: 14,
-    color: colors.textMuted,
   },
   editNamePicker: {
     borderRadius: 24,
@@ -776,5 +752,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: colors.background,
+  },
+  editNameCancelText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.textMuted,
   },
 });

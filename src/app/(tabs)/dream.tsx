@@ -5,7 +5,6 @@ import { DreamBackground } from '../../components/DreamBackground';
 import { useCallback, useState } from 'react';
 import {
   KeyboardAvoidingView,
-  Modal,
   Platform,
   Pressable,
   ScrollView,
@@ -22,7 +21,7 @@ import { useCredits } from '../../hooks/useCredits';
 import { useArtists } from '../../hooks/useArtists';
 import { useProfileContext } from '../../contexts/profile-context';
 import { useDreemartRevenueCat } from '../../contexts/dreemart-revenuecat-context';
-import { PaywallModal } from '../../components/PaywallModal';
+import { LanguagePickerModal } from '../../components/LanguagePickerModal';
 import { Analytics } from '../../lib/amplitude';
 import { colors, gradients } from '../../constants/theme';
 import type { Artist } from '../../types';
@@ -30,34 +29,24 @@ import { useTranslation } from 'react-i18next';
 import { useToast } from 'heroui-native';
 import {
   getCurrentLanguage,
+  LANGUAGE_LABELS,
   setLanguage,
-  SUPPORTED_LANGUAGES,
   type SupportedLanguage,
 } from '../../i18n';
 import { supabase } from '../../lib/supabase';
-
-const LANGUAGE_LABELS: Record<SupportedLanguage, string> = {
-  tr: 'Türkçe',
-  en: 'English',
-  ru: 'Русский',
-};
 
 export default function DreamScreen() {
   const { t } = useTranslation();
   const [prompt, setPrompt] = useState('');
   const [selectedArtist, setSelectedArtist] = useState<Artist | null>(null);
-  const [showPaywall, setShowPaywall] = useState(false);
   const [showLangPicker, setShowLangPicker] = useState(false);
-  const [paywallSource, setPaywallSource] = useState<
-    'no_credit' | 'locked_artist'
-  >('no_credit');
 
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { userId } = useAuth();
   const { credits } = useCredits(userId);
-  const { profile, refetch: refetchProfile } = useProfileContext();
-  const { artists, loading: artistsLoading } = useArtists(userId, profile?.tier ?? 'free');
+  const { refetch: refetchProfile } = useProfileContext();
+  const { artists, loading: artistsLoading } = useArtists(userId, credits);
 
   useFocusEffect(
     useCallback(() => {
@@ -65,7 +54,7 @@ export default function DreamScreen() {
     }, [refetchProfile])
   );
   const { toast } = useToast();
-  const { packages, isInitialized } = useDreemartRevenueCat();
+  const { presentRevenueCatPaywall } = useDreemartRevenueCat();
 
   const handleLanguageChange = useCallback(
     async (lng: SupportedLanguage) => {
@@ -92,31 +81,31 @@ export default function DreamScreen() {
   const creditCost = 1;
   const handleCreate = useCallback(() => {
     if (credits < creditCost) {
-      setPaywallSource('no_credit');
-      setShowPaywall(true);
+      void presentRevenueCatPaywall('no_credit');
       return;
     }
     if (!selectedArtist) return;
     if (!prompt.trim()) return;
 
     Analytics.dreamSubmitted(selectedArtist.id);
+    const requestId = `${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
     router.push({
       pathname: '/generation',
-      params: { prompt: prompt.trim(), artist_id: selectedArtist.id },
+      params: {
+        prompt: prompt.trim(),
+        artist_id: selectedArtist.id,
+        rid: requestId,
+      },
     });
-  }, [credits, selectedArtist, prompt, router]);
+  }, [credits, selectedArtist, prompt, router, presentRevenueCatPaywall]);
 
   const handleLockedArtistPress = useCallback(() => {
-    setPaywallSource('locked_artist');
-    setShowPaywall(true);
-  }, []);
+    void presentRevenueCatPaywall('locked_artist');
+  }, [presentRevenueCatPaywall]);
 
   const handleCreditPress = useCallback(() => {
-    if (credits < 1) {
-      setPaywallSource('no_credit');
-      setShowPaywall(true);
-    }
-  }, [credits]);
+    void presentRevenueCatPaywall('no_credit');
+  }, [presentRevenueCatPaywall]);
 
   return (
     <DreamBackground style={[styles.container, { paddingTop: insets.top }]}>
@@ -206,44 +195,15 @@ export default function DreamScreen() {
         </ScrollView>
       </KeyboardAvoidingView>
 
-      <PaywallModal
-        visible={showPaywall}
-        onClose={() => setShowPaywall(false)}
-        source={paywallSource}
-        packages={packages}
-        isInitialized={isInitialized}
-      />
-
-      <Modal
+      <LanguagePickerModal
         visible={showLangPicker}
-        transparent
-        animationType="fade"
-        onRequestClose={() => setShowLangPicker(false)}
-      >
-        <Pressable
-          style={styles.langModalOverlay}
-          onPress={() => setShowLangPicker(false)}
-        >
-          <Pressable style={styles.langPicker} onPress={(e) => e.stopPropagation()}>
-            <AppText style={styles.langPickerTitle}>{t('profile.language')}</AppText>
-            {SUPPORTED_LANGUAGES.map((lng) => (
-              <Pressable
-                key={lng}
-                style={styles.langOption}
-                onPress={() => handleLanguageChange(lng)}
-              >
-                <AppText style={styles.langOptionText}>{LANGUAGE_LABELS[lng]}</AppText>
-              </Pressable>
-            ))}
-            <Pressable
-              style={styles.langCancel}
-              onPress={() => setShowLangPicker(false)}
-            >
-              <AppText style={styles.langCancelText}>{t('generation.back')}</AppText>
-            </Pressable>
-          </Pressable>
-        </Pressable>
-      </Modal>
+        onClose={() => setShowLangPicker(false)}
+        currentLanguage={getCurrentLanguage()}
+        onSelect={handleLanguageChange}
+        title={t('profile.language')}
+        searchPlaceholder={t('profile.languageSearchPlaceholder')}
+        noResultsText={t('profile.languageNoResults')}
+      />
     </DreamBackground>
   );
 }
@@ -348,48 +308,5 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     textAlign: 'center',
     marginTop: -8,
-  },
-  langModalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.6)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 24,
-  },
-  langPicker: {
-    backgroundColor: colors.surface,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: 20,
-    width: '100%',
-    maxWidth: 320,
-  },
-  langPickerTitle: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: colors.text,
-    marginBottom: 16,
-    textAlign: 'center',
-  },
-  langOption: {
-    padding: 16,
-    borderRadius: 12,
-    marginBottom: 4,
-  },
-  langOptionText: {
-    fontSize: 16,
-    color: colors.text,
-  },
-  langCancel: {
-    padding: 16,
-    alignItems: 'center',
-    marginTop: 12,
-    borderTopWidth: 1,
-    borderTopColor: colors.border,
-  },
-  langCancelText: {
-    fontSize: 14,
-    color: colors.textMuted,
   },
 });

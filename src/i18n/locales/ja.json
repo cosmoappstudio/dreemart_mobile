@@ -1,0 +1,115 @@
+{
+  "tabs": {
+    "dream": "夢",
+    "gallery": "ギャラリー",
+    "profile": "プロフィール"
+  },
+  "dream": {
+    "title": "夢を説明してください",
+    "artistTitle": "アーティストを選ぶ",
+    "artistSubtitle": "1人につき1クレジット",
+    "placeholder": "昨夜、果てしなく続く階段を登っていた…",
+    "createBtn": "絵を作成（{{count}}クレジット）",
+    "hint": "詳しく書くほど、イメージが鮮明になります。"
+  },
+  "gallery": {
+    "title": "ギャラリー",
+    "loading": "読み込み中…",
+    "empty": "まだ夢がありません。最初の夢を作成しましょう。",
+    "emptySubtext": "夢を言葉にして、絵を作ろう"
+  },
+  "profile": {
+    "title": "マイプロフィール",
+    "freePlan": "無料プラン",
+    "proPlan": "PRO",
+    "remainingCredits": "残りクレジット",
+    "getCredits": "+ クレジットを入手",
+    "generated": "生成数",
+    "totalDreams": "夢の合計",
+    "dreamScore": "ドリームスコア",
+    "dreamScoreFormula": "夢の合計 × 10",
+    "level": "レベル",
+    "dreamsCount": "{{count}}件の夢",
+    "restorePurchases": "購入を復元",
+    "privacyPolicy": "プライバシーポリシー",
+    "termsOfUse": "利用規約",
+    "termsAndConditions": "規約",
+    "privacyAgreement": "プライバシー同意",
+    "notificationSettings": "通知設定",
+    "rateUs": "評価する",
+    "support": "サポート",
+    "deleteAccount": "アカウントを削除",
+    "eula": "EULA",
+    "language": "言語",
+    "deleteAccountConfirmTitle": "アカウント削除",
+    "deleteAccountConfirmMessage": "アカウントは削除され、元に戻せません。続行しますか？",
+    "deleteAccountSuccess": "アカウントを削除しました",
+    "defaultUsername": "夢の旅人",
+    "editName": "名前を変更",
+    "editNamePlaceholder": "名前を入力",
+    "nameUpdated": "名前を更新しました",
+    "nameUpdateError": "名前の更新に失敗しました",
+    "languageUpdated": "言語を更新しました",
+    "languageUpdateError": "言語の更新に失敗しました",
+    "startOnboardingDev": "オンボーディングを開始（テスト）"
+  },
+  "levels": {
+    "new": "新米ドリーマー",
+    "explorer": "夢の探検家",
+    "master": "夢の達人",
+    "virtuoso": "夢の名手"
+  },
+  "paywall": {
+    "title": "クレジットパック",
+    "subtitle": "クレジットでさらに夢をビジュアル化",
+    "emptyHint": "クレジットパックはプロフィール画面から。",
+    "mostPopular": "一番人気",
+    "credits": "{{count}}クレジット",
+    "restore": "購入を復元"
+  },
+  "onboarding": {
+    "step1Title": "夢をビジュアル化",
+    "step1Desc": "夢を文章で書くと、AIがユニークなアートに変えます。",
+    "step2Title": "40種類以上のアーティストスタイル",
+    "step2Desc": "ゴッホ、モネ、ダリなど。夢ごとにスタイルを選べます。",
+    "step3Title": "通知をオン",
+    "step3Desc": "新しい夢のリマインダーやお得情報を受け取れます。",
+    "step4Title": "始める準備はできましたか？",
+    "step4Desc": "無料クレジット1つでスタート。パックもご覧ください。",
+    "next": "次へ",
+    "start": "始める",
+    "enableNotifications": "通知を有効にする",
+    "skip": "スキップ"
+  },
+  "generation": {
+    "loading": "夢が形になります…",
+    "loadingSubtext": "数秒かかることがあります",
+    "interpretation": "解釈",
+    "save": "保存",
+    "share": "共有",
+    "back": "戻る",
+    "newDream": "新しい夢",
+    "error": "エラーが発生しました",
+    "saved": "保存しました",
+    "saveError": "保存エラー",
+    "shareNotSupported": "共有に対応していません",
+    "shareError": "共有エラー"
+  },
+  "dreamDetail": {
+    "interpretation": "夢占い",
+    "download": "ダウンロード",
+    "share": "共有"
+  },
+  "artists": {
+    "loading": "アーティストを読み込み中…",
+    "empty": "アーティストが見つかりません。"
+  },
+  "errors": {
+    "insufficientCredits": "クレジットが不足しています",
+    "artistLocked": "このアーティストを使うにはクレジットが必要です"
+  },
+  "common": {
+    "permissionRequired": "許可が必要です",
+    "photoLibraryPermission": "フォトライブラリへの保存を許可してください。"
+  }
+}

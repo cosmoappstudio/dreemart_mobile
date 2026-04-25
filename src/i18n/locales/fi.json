@@ -1,0 +1,115 @@
+{
+  "tabs": {
+    "dream": "Uni",
+    "gallery": "Galleria",
+    "profile": "Profiili"
+  },
+  "dream": {
+    "title": "KUVAA UNESI",
+    "artistTitle": "VALITSE TAITEILIJA",
+    "artistSubtitle": "Jokainen maksaa 1 krediitin",
+    "placeholder": "Eilen illalla nousin loputtomia portaita...",
+    "createBtn": "Luo maalauksesi ({{count}} krediitti)",
+    "hint": "Mitä tarkemmin kuvaat untasi, sitä parempi visualisointi."
+  },
+  "gallery": {
+    "title": "Galleria",
+    "loading": "Ladataan...",
+    "empty": "Ei unia vielä. Luo ensimmäinen!",
+    "emptySubtext": "Kuvaile uniasi, luo maalauksesi"
+  },
+  "profile": {
+    "title": "Oma profiili",
+    "freePlan": "ILMAINEN SUUNNITELMA",
+    "proPlan": "PRO",
+    "remainingCredits": "JÄLJELLÄ OLEVAT KREDIITIT",
+    "getCredits": "+ Hanki krediittejä",
+    "generated": "LUOTU",
+    "totalDreams": "Unia yhteensä",
+    "dreamScore": "UNIPISTEET",
+    "dreamScoreFormula": "Unia yhteensä x 10",
+    "level": "TASO",
+    "dreamsCount": "{{count}} unea",
+    "restorePurchases": "Palauta ostot",
+    "privacyPolicy": "Tietosuoja",
+    "termsOfUse": "Käyttöehdot",
+    "termsAndConditions": "Ehdot",
+    "privacyAgreement": "Tietosuojasopimus",
+    "notificationSettings": "Ilmoitukset",
+    "rateUs": "Arvostele meitä",
+    "support": "Tuki",
+    "deleteAccount": "Poista tilini",
+    "eula": "EULA",
+    "language": "Kieli",
+    "deleteAccountConfirmTitle": "Poista tili",
+    "deleteAccountConfirmMessage": "Tilisi poistetaan. Toimintoa ei voi perua. Jatketaanko?",
+    "deleteAccountSuccess": "Tilisi on poistettu",
+    "defaultUsername": "Unien matkailija",
+    "editName": "Vaihda nimi",
+    "editNamePlaceholder": "Kirjoita nimesi",
+    "nameUpdated": "Nimi päivitetty",
+    "nameUpdateError": "Nimen päivitys epäonnistui",
+    "languageUpdated": "Kieli päivitetty",
+    "languageUpdateError": "Kielen päivitys epäonnistui",
+    "startOnboardingDev": "Käynnistä onboarding (testi)"
+  },
+  "levels": {
+    "new": "Uusi unennäkijä",
+    "explorer": "Unien tutkija",
+    "master": "Unien mestari",
+    "virtuoso": "Unien virtuoosi"
+  },
+  "paywall": {
+    "title": "Krediittipaketit",
+    "subtitle": "Hanki krediittejä visualisoidaaksesi lisää unia",
+    "emptyHint": "Paketit löytyvät profiilisivulta.",
+    "mostPopular": "Suosituin",
+    "credits": "{{count}} krediittiä",
+    "restore": "Palauta ostot"
+  },
+  "onboarding": {
+    "step1Title": "Visualisoi unesi",
+    "step1Desc": "Kuvaile unesi tekstinä – tekoäly muuttaa ne ainutlaatuisiksi taideteoksiksi.",
+    "step2Title": "Yli 40 taiteilijatyyliä",
+    "step2Desc": "Van Gogh, Monet, Dalí ja muuta. Valitse tyyli jokaiselle unelle.",
+    "step3Title": "Ota ilmoitukset käyttöön",
+    "step3Desc": "Muistutukset ja erikoistarjoukset.",
+    "step4Title": "Valmis aloittamaan?",
+    "step4Desc": "Aloita yhdellä ilmaisella krediitillä. Tutustu paketteihin.",
+    "next": "Seuraava",
+    "start": "Aloita",
+    "enableNotifications": "Ota ilmoitukset käyttöön",
+    "skip": "Ohita"
+  },
+  "generation": {
+    "loading": "Unesi herää eloon...",
+    "loadingSubtext": "Tämä voi kestää muutaman sekunnin",
+    "interpretation": "Tulkinta",
+    "save": "Tallenna",
+    "share": "Jaa",
+    "back": "Takaisin",
+    "newDream": "Uusi uni",
+    "error": "Tapahtui virhe",
+    "saved": "Tallennettu",
+    "saveError": "Tallennusvirhe",
+    "shareNotSupported": "Jakaminen ei tuettu",
+    "shareError": "Jakamisvirhe"
+  },
+  "dreamDetail": {
+    "interpretation": "Unitulkinta",
+    "download": "Lataa",
+    "share": "Jaa"
+  },
+  "artists": {
+    "loading": "Ladataan taiteilijoita...",
+    "empty": "Taiteilijoita ei löytynyt."
+  },
+  "errors": {
+    "insufficientCredits": "Krediitit eivät riitä",
+    "artistLocked": "Tarvitset krediittejä tälle taiteilijalle"
+  },
+  "common": {
+    "permissionRequired": "Lupa tarvitaan",
+    "photoLibraryPermission": "Anna lupa tallentaa valokuvakirjastoon."
+  }
+}

@@ -22,11 +22,10 @@ import '../i18n';
 import '../../global.css';
 import { AuthProvider, useAuth } from '../contexts/auth-context';
 import { DreemartRevenueCatProvider } from '../contexts/dreemart-revenuecat-context';
+import { PushRegistration } from '../components/PushRegistration';
 import { OnboardingProvider, useOnboarding } from '../contexts/onboarding-context';
 import { ProfileProvider } from '../contexts/profile-context';
-import { Analytics, initAmplitude } from '../lib/amplitude';
-import { initMeta, logMetaEvent } from '../lib/meta';
-import { PushNotificationSetup } from '../components/PushNotificationSetup';
+import { initAmplitude, setAmplitudeUserId } from '../lib/amplitude';
 import { colors } from '../constants/theme';
 
 function LoadingScreen() {
@@ -84,6 +83,10 @@ function AppContent() {
 function AppWithAuth() {
   const { userId, loading } = useAuth();
 
+  useEffect(() => {
+    if (userId) setAmplitudeUserId(userId);
+  }, [userId]);
+
   if (loading) {
     return <LoadingScreen />;
   }
@@ -91,7 +94,7 @@ function AppWithAuth() {
   return (
     <DreemartRevenueCatProvider userId={userId}>
       <ProfileProvider userId={userId}>
-        <PushNotificationSetup userId={userId} />
+        <PushRegistration userId={userId} />
         <OnboardingProvider>
           <AppContent />
         </OnboardingProvider>
@@ -110,9 +113,6 @@ export default function Layout() {
 
   useEffect(() => {
     initAmplitude();
-    initMeta();
-    Analytics.appOpened();
-    logMetaEvent('app_launch');
   }, []);
 
   if (!fonts) {

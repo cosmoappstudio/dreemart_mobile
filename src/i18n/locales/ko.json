@@ -1,0 +1,115 @@
+{
+  "tabs": {
+    "dream": "꿈",
+    "gallery": "갤러리",
+    "profile": "프로필"
+  },
+  "dream": {
+    "title": "꿈을 설명하세요",
+    "artistTitle": "아티스트 선택",
+    "artistSubtitle": "한 명당 1크레딧",
+    "placeholder": "어젯밤 끝없는 계단을 올라가고 있었어요...",
+    "createBtn": "그림 만들기 ({{count}}크레딧)",
+    "hint": "꿈을 자세히 설명할수록 시각화가 더 좋아집니다."
+  },
+  "gallery": {
+    "title": "갤러리",
+    "loading": "불러오는 중...",
+    "empty": "아직 꿈이 없습니다. 첫 꿈을 만들어 보세요!",
+    "emptySubtext": "꿈을 말로 적고, 그림으로 만드세요"
+  },
+  "profile": {
+    "title": "내 프로필",
+    "freePlan": "무료 플랜",
+    "proPlan": "PRO",
+    "remainingCredits": "남은 크레딧",
+    "getCredits": "+ 크레딧 구매",
+    "generated": "생성됨",
+    "totalDreams": "총 꿈 수",
+    "dreamScore": "드림 스코어",
+    "dreamScoreFormula": "총 꿈 수 × 10",
+    "level": "레벨",
+    "dreamsCount": "꿈 {{count}}개",
+    "restorePurchases": "구매 복원",
+    "privacyPolicy": "개인정보 처리방침",
+    "termsOfUse": "이용약관",
+    "termsAndConditions": "약관",
+    "privacyAgreement": "개인정보 동의",
+    "notificationSettings": "알림 설정",
+    "rateUs": "앱 평가하기",
+    "support": "고객지원",
+    "deleteAccount": "계정 삭제",
+    "eula": "EULA",
+    "language": "언어",
+    "deleteAccountConfirmTitle": "계정 삭제",
+    "deleteAccountConfirmMessage": "계정이 삭제되며 되돌릴 수 없습니다. 계속할까요?",
+    "deleteAccountSuccess": "계정이 삭제되었습니다",
+    "defaultUsername": "꿈 여행자",
+    "editName": "이름 변경",
+    "editNamePlaceholder": "이름을 입력하세요",
+    "nameUpdated": "이름이 변경되었습니다",
+    "nameUpdateError": "이름 변경에 실패했습니다",
+    "languageUpdated": "언어가 변경되었습니다",
+    "languageUpdateError": "언어 변경에 실패했습니다",
+    "startOnboardingDev": "온보딩 시작(테스트)"
+  },
+  "levels": {
+    "new": "새내기 꿈꾼",
+    "explorer": "꿈 탐험가",
+    "master": "꿈의 달인",
+    "virtuoso": "꿈의 거장"
+  },
+  "paywall": {
+    "title": "크레딧 패키지",
+    "subtitle": "크레딧으로 더 많은 꿈을 시각화하세요",
+    "emptyHint": "크레딧 패키지는 프로필 화면에서 볼 수 있어요.",
+    "mostPopular": "가장 인기",
+    "credits": "크레딧 {{count}}개",
+    "restore": "구매 복원"
+  },
+  "onboarding": {
+    "step1Title": "꿈을 시각화하세요",
+    "step1Desc": "꿈을 글로 적으면 AI가 독특한 예술 작품으로 바꿉니다.",
+    "step2Title": "40가지 이상의 화가 스타일",
+    "step2Desc": "반 고흐, 모네, 달리 등. 꿈마다 스타일을 고르세요.",
+    "step3Title": "알림 켜기",
+    "step3Desc": "새 꿈 알림과 특별 혜택을 받아보세요.",
+    "step4Title": "시작할 준비가 되었나요?",
+    "step4Desc": "무료 크레딧 1개로 시작하세요. 패키지도 확인해 보세요.",
+    "next": "다음",
+    "start": "시작",
+    "enableNotifications": "알림 켜기",
+    "skip": "건너뛰기"
+  },
+  "generation": {
+    "loading": "꿈이 살아납니다...",
+    "loadingSubtext": "몇 초 걸릴 수 있어요",
+    "interpretation": "해석",
+    "save": "저장",
+    "share": "공유",
+    "back": "뒤로",
+    "newDream": "새 꿈",
+    "error": "오류가 발생했습니다",
+    "saved": "저장됨",
+    "saveError": "저장 오류",
+    "shareNotSupported": "공유를 지원하지 않습니다",
+    "shareError": "공유 오류"
+  },
+  "dreamDetail": {
+    "interpretation": "꿈 해몽",
+    "download": "다운로드",
+    "share": "공유"
+  },
+  "artists": {
+    "loading": "아티스트 불러오는 중...",
+    "empty": "아티스트를 찾을 수 없습니다."
+  },
+  "errors": {
+    "insufficientCredits": "크레딧이 부족합니다",
+    "artistLocked": "이 아티스트를 사용하려면 크레딧이 필요합니다"
+  },
+  "common": {
+    "permissionRequired": "권한이 필요합니다",
+    "photoLibraryPermission": "사진 보관함에 저장하려면 권한을 허용해 주세요."
+  }
+}

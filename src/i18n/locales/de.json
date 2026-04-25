@@ -1,0 +1,115 @@
+{
+  "tabs": {
+    "dream": "Traum",
+    "gallery": "Galerie",
+    "profile": "Profil"
+  },
+  "dream": {
+    "title": "BESCHREIBE DEINEN TRAUM",
+    "artistTitle": "KÜNSTLER WÄHLEN",
+    "artistSubtitle": "Jeder kostet 1 Credit",
+    "placeholder": "Letzte Nacht bin ich eine endlose Treppe hinaufgegangen...",
+    "createBtn": "Dein Gemälde erstellen ({{count}} Credit)",
+    "hint": "Je detaillierter du deinen Traum beschreibst, desto besser die Visualisierung."
+  },
+  "gallery": {
+    "title": "Galerie",
+    "loading": "Wird geladen...",
+    "empty": "Noch keine Träume. Erstelle deinen ersten Traum!",
+    "emptySubtext": "Beschreibe deine Träume, erschaffe deine Gemälde"
+  },
+  "profile": {
+    "title": "Mein Profil",
+    "freePlan": "KOSTENLOSER PLAN",
+    "proPlan": "PRO",
+    "remainingCredits": "VERBLEIBENDE CREDITS",
+    "getCredits": "+ Credits holen",
+    "generated": "ERSTELLT",
+    "totalDreams": "Träume gesamt",
+    "dreamScore": "TRAUM-SCORE",
+    "dreamScoreFormula": "Träume gesamt x 10",
+    "level": "LEVEL",
+    "dreamsCount": "{{count}} Träume",
+    "restorePurchases": "Käufe wiederherstellen",
+    "privacyPolicy": "Datenschutz",
+    "termsOfUse": "Nutzungsbedingungen",
+    "termsAndConditions": "AGB",
+    "privacyAgreement": "Datenschutzvereinbarung",
+    "notificationSettings": "Benachrichtigungen",
+    "rateUs": "Bewerte uns",
+    "support": "Support",
+    "deleteAccount": "Konto löschen",
+    "eula": "EULA",
+    "language": "Sprache",
+    "deleteAccountConfirmTitle": "Konto löschen",
+    "deleteAccountConfirmMessage": "Dein Konto wird gelöscht. Das kann nicht rückgängig gemacht werden. Fortfahren?",
+    "deleteAccountSuccess": "Dein Konto wurde gelöscht",
+    "defaultUsername": "Traumreisender",
+    "editName": "Name ändern",
+    "editNamePlaceholder": "Deinen Namen eingeben",
+    "nameUpdated": "Name aktualisiert",
+    "nameUpdateError": "Name konnte nicht aktualisiert werden",
+    "languageUpdated": "Sprache aktualisiert",
+    "languageUpdateError": "Sprache konnte nicht aktualisiert werden",
+    "startOnboardingDev": "Onboarding starten (Test)"
+  },
+  "levels": {
+    "new": "Neuer Träumer",
+    "explorer": "Traumforscher",
+    "master": "Traummeister",
+    "virtuoso": "Traumvirtuose"
+  },
+  "paywall": {
+    "title": "Credit-Pakete",
+    "subtitle": "Hol dir Credits für mehr Traumvisualisierungen",
+    "emptyHint": "Credit-Pakete findest du auf der Profilseite.",
+    "mostPopular": "Beliebteste",
+    "credits": "{{count}} Credits",
+    "restore": "Käufe wiederherstellen"
+  },
+  "onboarding": {
+    "step1Title": "Visualisiere deine Träume",
+    "step1Desc": "Beschreibe deine Träume in Text – KI verwandelt sie in einzigartige Kunstwerke.",
+    "step2Title": "Über 40 Künstlerstile",
+    "step2Desc": "Van Gogh, Monet, Dalí und mehr. Wähle für jeden Traum einen eigenen Stil.",
+    "step3Title": "Benachrichtigungen aktivieren",
+    "step3Desc": "Erinnerungen an neue Träume und Infos zu Angeboten erhalten.",
+    "step4Title": "Bereit loszulegen?",
+    "step4Desc": "Starte mit 1 kostenlosem Credit. Entdecke unsere Pakete für mehr.",
+    "next": "Weiter",
+    "start": "Start",
+    "enableNotifications": "Benachrichtigungen aktivieren",
+    "skip": "Überspringen"
+  },
+  "generation": {
+    "loading": "Dein Traum wird lebendig...",
+    "loadingSubtext": "Das kann ein paar Sekunden dauern",
+    "interpretation": "Deutung",
+    "save": "Speichern",
+    "share": "Teilen",
+    "back": "Zurück",
+    "newDream": "Neuer Traum",
+    "error": "Ein Fehler ist aufgetreten",
+    "saved": "Gespeichert",
+    "saveError": "Speicherfehler",
+    "shareNotSupported": "Teilen nicht unterstützt",
+    "shareError": "Teilen fehlgeschlagen"
+  },
+  "dreamDetail": {
+    "interpretation": "Traumdeutung",
+    "download": "Herunterladen",
+    "share": "Teilen"
+  },
+  "artists": {
+    "loading": "Künstler werden geladen...",
+    "empty": "Keine Künstler gefunden."
+  },
+  "errors": {
+    "insufficientCredits": "Nicht genug Credits",
+    "artistLocked": "Für diesen Künstler brauchst du Credits"
+  },
+  "common": {
+    "permissionRequired": "Berechtigung nötig",
+    "photoLibraryPermission": "Erlaube den Zugriff, um in der Fotomediathek zu speichern."
+  }
+}

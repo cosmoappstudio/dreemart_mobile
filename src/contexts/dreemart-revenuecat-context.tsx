@@ -1,25 +1,33 @@
-import React, {
+import {
   createContext,
+  useCallback,
   useContext,
   useEffect,
-  useRef,
   useState,
+  type ReactNode,
 } from 'react';
-import type { PurchasesPackage } from 'react-native-purchases';
 import Purchases from 'react-native-purchases';
-import { supabase } from '../lib/supabase';
+import type { PurchasesPackage } from 'react-native-purchases';
+import RevenueCatUI from 'react-native-purchases-ui';
 import {
-  initRevenueCat,
+  REVENUECAT_ENABLED,
+  ensurePurchasesForUser,
   getOfferings,
+  logOutRevenueCatIfReady,
   purchasePackage as rcPurchasePackage,
   restorePurchases as rcRestorePurchases,
-  CREDIT_MAP,
+  creditsForIapProductId,
 } from '../lib/revenuecat';
 import { Analytics } from '../lib/amplitude';
+import type { PaywallSource } from '../types';
 
 type DreemartRevenueCatContextType = {
   packages: PurchasesPackage[];
   isInitialized: boolean;
+  /** Virtual currency ekranları yenilensin diye sürüm (satın alma/restore sonrası artar) */
+  virtualCurrencyVersion: number;
+  /** RC Dashboard’da tasarlanan paywall (Paywalls) — `presentPaywall` */
+  presentRevenueCatPaywall: (source: PaywallSource) => Promise<void>;
   purchasePackage: (pkg: PurchasesPackage) => Promise<void>;
   restorePurchases: (userId: string) => Promise<void>;
 };
@@ -32,82 +40,108 @@ export function DreemartRevenueCatProvider({
   children,
   userId,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   userId: string | null;
 }) {
   const [packages, setPackages] = useState<PurchasesPackage[]>([]);
   const [isInitialized, setIsInitialized] = useState(false);
-  const initRef = useRef(false);
+  const [virtualCurrencyVersion, setVirtualCurrencyVersion] = useState(0);
 
   useEffect(() => {
-    if (initRef.current) return;
-    if (!userId) {
-      setIsInitialized(true);
-      return;
-    }
-    initRef.current = true;
+    let cancelled = false;
 
-    const init = async () => {
+    const run = async () => {
+      if (!userId) {
+        setPackages([]);
+        await logOutRevenueCatIfReady();
+        if (!cancelled) setIsInitialized(true);
+        return;
+      }
+
+      setIsInitialized(false);
       try {
-        initRevenueCat(userId);
+        await ensurePurchasesForUser(userId);
+        if (cancelled) return;
         const pkgs = await getOfferings();
+        if (cancelled) return;
         setPackages(pkgs);
       } catch (e) {
         console.error('RevenueCat init error:', e);
       } finally {
-        setIsInitialized(true);
+        if (!cancelled) setIsInitialized(true);
       }
     };
 
-    init();
+    void run();
+    return () => {
+      cancelled = true;
+    };
   }, [userId]);
 
   const purchasePackage = async (pkg: PurchasesPackage) => {
     if (!userId) return;
     Analytics.purchaseInitiated(pkg.identifier);
-    const customerInfo = await rcPurchasePackage(pkg);
-    const identifier = pkg.identifier.toLowerCase();
-    const creditAmount =
-      Object.entries(CREDIT_MAP).find(([k]) => identifier.includes(k))?.[1] ??
-      5;
-
-    const { data: current } = await supabase
-      .from('profiles')
-      .select('credits')
-      .eq('id', userId)
-      .single();
-
-    await supabase
-      .from('profiles')
-      .update({
-        credits: (current?.credits ?? 0) + creditAmount,
-        tier: 'paid',
-        last_purchased_pack_id: pkg.identifier,
-        updated_at: new Date().toISOString(),
-      })
-      .eq('id', userId);
-
-    Analytics.purchaseCompleted(pkg.identifier, creditAmount);
+    await rcPurchasePackage(pkg);
+    try {
+      await Purchases.invalidateVirtualCurrenciesCache();
+    } catch (e) {
+      console.warn('invalidateVirtualCurrenciesCache:', e);
+    }
+    setVirtualCurrencyVersion((v: number) => v + 1);
+    const estGranted = creditsForIapProductId(
+      pkg.identifier,
+      pkg.product.identifier
+    );
+    if (estGranted === 0) {
+      console.warn(
+        'Bilinmeyen IAP id (görünen etiket); RevenueCat panelinde ürün-virtual currency eşleşmesini kontrol et:',
+        pkg.identifier,
+        pkg.product.identifier
+      );
+    }
+    Analytics.purchaseCompleted(pkg.identifier, estGranted);
   };
 
-  const restorePurchases = async (uid: string) => {
-    const customerInfo = await rcRestorePurchases();
-    const hasPurchase = Object.keys(customerInfo.nonSubscriptionTransactions ?? {}).length > 0 ||
-      Object.keys(customerInfo.entitlements.active).length > 0;
-    if (hasPurchase) {
-      await supabase
-        .from('profiles')
-        .update({ tier: 'paid', updated_at: new Date().toISOString() })
-        .eq('id', uid);
+  const restorePurchases = async (_userId: string) => {
+    await rcRestorePurchases();
+    try {
+      await Purchases.invalidateVirtualCurrenciesCache();
+    } catch (e) {
+      console.warn('invalidateVirtualCurrenciesCache:', e);
     }
+    setVirtualCurrencyVersion((v: number) => v + 1);
     Analytics.purchaseRestored();
   };
+
+  const presentRevenueCatPaywall = useCallback(
+    async (source: PaywallSource) => {
+      if (!REVENUECAT_ENABLED || !userId) return;
+      Analytics.paywallViewed(source);
+      try {
+        const offerings = await Purchases.getOfferings();
+        const current = offerings.current;
+        await RevenueCatUI.presentPaywall(current ? { offering: current } : {});
+      } catch (e) {
+        console.error('RevenueCat presentPaywall:', e);
+      } finally {
+        try {
+          await Purchases.invalidateVirtualCurrenciesCache();
+        } catch (e) {
+          console.warn('invalidateVirtualCurrenciesCache:', e);
+        }
+        setVirtualCurrencyVersion((v: number) => v + 1);
+      }
+    },
+    [userId]
+  );
 
   return (
     <Context.Provider
       value={{
         packages,
         isInitialized,
+        virtualCurrencyVersion,
+        presentRevenueCatPaywall,
         purchasePackage,
         restorePurchases,
       }}

@@ -1,0 +1,115 @@
+{
+  "tabs": {
+    "dream": "Rêve",
+    "gallery": "Galerie",
+    "profile": "Profil"
+  },
+  "dream": {
+    "title": "DÉCRIVEZ VOTRE RÊVE",
+    "artistTitle": "CHOISIR UN ARTISTE",
+    "artistSubtitle": "Chaque style coûte 1 crédit",
+    "placeholder": "La nuit dernière, je montais un escalier infini...",
+    "createBtn": "Créer votre tableau ({{count}} crédit)",
+    "hint": "Plus votre description est détaillée, meilleure sera la visualisation."
+  },
+  "gallery": {
+    "title": "Galerie",
+    "loading": "Chargement...",
+    "empty": "Pas encore de rêves. Créez le premier !",
+    "emptySubtext": "Décrivez vos rêves, créez vos tableaux"
+  },
+  "profile": {
+    "title": "Mon profil",
+    "freePlan": "PLAN GRATUIT",
+    "proPlan": "PRO",
+    "remainingCredits": "CRÉDITS RESTANTS",
+    "getCredits": "+ Obtenir des crédits",
+    "generated": "GÉNÉRÉS",
+    "totalDreams": "Total des rêves",
+    "dreamScore": "SCORE DE RÊVE",
+    "dreamScoreFormula": "Total des rêves x 10",
+    "level": "NIVEAU",
+    "dreamsCount": "{{count}} rêves",
+    "restorePurchases": "Restaurer les achats",
+    "privacyPolicy": "Politique de confidentialité",
+    "termsOfUse": "Conditions d'utilisation",
+    "termsAndConditions": "Conditions générales",
+    "privacyAgreement": "Accord de confidentialité",
+    "notificationSettings": "Notifications",
+    "rateUs": "Notez-nous",
+    "support": "Assistance",
+    "deleteAccount": "Supprimer mon compte",
+    "eula": "CLUF",
+    "language": "Langue",
+    "deleteAccountConfirmTitle": "Supprimer le compte",
+    "deleteAccountConfirmMessage": "Votre compte sera supprimé. Cette action est irréversible. Continuer ?",
+    "deleteAccountSuccess": "Votre compte a été supprimé",
+    "defaultUsername": "Voyageur onirique",
+    "editName": "Modifier le nom",
+    "editNamePlaceholder": "Entrez votre nom",
+    "nameUpdated": "Nom mis à jour",
+    "nameUpdateError": "Échec de la mise à jour du nom",
+    "languageUpdated": "Langue mise à jour",
+    "languageUpdateError": "Échec de la mise à jour de la langue",
+    "startOnboardingDev": "Démarrer l’onboarding (test)"
+  },
+  "levels": {
+    "new": "Nouveau rêveur",
+    "explorer": "Explorateur de rêves",
+    "master": "Maître des rêves",
+    "virtuoso": "Virtuose des rêves"
+  },
+  "paywall": {
+    "title": "Packs de crédits",
+    "subtitle": "Obtenez des crédits pour visualiser plus de rêves",
+    "emptyHint": "Les packs sont accessibles depuis la page profil.",
+    "mostPopular": "Le plus populaire",
+    "credits": "{{count}} crédits",
+    "restore": "Restaurer les achats"
+  },
+  "onboarding": {
+    "step1Title": "Visualisez vos rêves",
+    "step1Desc": "Décrivez vos rêves en texte, l'IA les transformera en œuvres uniques.",
+    "step2Title": "Plus de 40 styles d'artistes",
+    "step2Desc": "Van Gogh, Monet, Dalí et plus. Choisissez un style pour chaque rêve.",
+    "step3Title": "Activer les notifications",
+    "step3Desc": "Recevez des rappels et des offres spéciales.",
+    "step4Title": "Prêt à commencer ?",
+    "step4Desc": "Commencez avec 1 crédit gratuit. Découvrez nos packs.",
+    "next": "Suivant",
+    "start": "Commencer",
+    "enableNotifications": "Activer les notifications",
+    "skip": "Passer"
+  },
+  "generation": {
+    "loading": "Votre rêve prend vie...",
+    "loadingSubtext": "Cela peut prendre quelques secondes",
+    "interpretation": "Interprétation",
+    "save": "Enregistrer",
+    "share": "Partager",
+    "back": "Retour",
+    "newDream": "Nouveau rêve",
+    "error": "Une erreur s'est produite",
+    "saved": "Enregistré",
+    "saveError": "Erreur d'enregistrement",
+    "shareNotSupported": "Partage non pris en charge",
+    "shareError": "Erreur de partage"
+  },
+  "dreamDetail": {
+    "interpretation": "Interprétation du rêve",
+    "download": "Télécharger",
+    "share": "Partager"
+  },
+  "artists": {
+    "loading": "Chargement des artistes...",
+    "empty": "Aucun artiste trouvé."
+  },
+  "errors": {
+    "insufficientCredits": "Crédits insuffisants",
+    "artistLocked": "Des crédits sont nécessaires pour cet artiste"
+  },
+  "common": {
+    "permissionRequired": "Autorisation requise",
+    "photoLibraryPermission": "Autorisez l'accès pour enregistrer dans la photothèque."
+  }
+}

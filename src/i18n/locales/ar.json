@@ -1,0 +1,115 @@
+{
+  "tabs": {
+    "dream": "حلم",
+    "gallery": "المعرض",
+    "profile": "الملف"
+  },
+  "dream": {
+    "title": "صف حلمك",
+    "artistTitle": "اختر الفنان",
+    "artistSubtitle": "كل خيار يكلف رصيدًا واحدًا",
+    "placeholder": "الليلة الماضية كنت أصعد سلالم لا نهاية لها...",
+    "createBtn": "أنشئ لوحتك ({{count}} رصيد)",
+    "hint": "كلما زادت التفاصيل، كان التصوير أوضح."
+  },
+  "gallery": {
+    "title": "المعرض",
+    "loading": "جارٍ التحميل...",
+    "empty": "لا أحلام بعد. أنشئ حلمك الأول!",
+    "emptySubtext": "صف أحلامك، أنشئ لوحاتك"
+  },
+  "profile": {
+    "title": "ملفي الشخصي",
+    "freePlan": "الخطة المجانية",
+    "proPlan": "PRO",
+    "remainingCredits": "الأرصدة المتبقية",
+    "getCredits": "+ احصل على أرصدة",
+    "generated": "المُنشأة",
+    "totalDreams": "إجمالي الأحلام",
+    "dreamScore": "نقاط الأحلام",
+    "dreamScoreFormula": "إجمالي الأحلام × 10",
+    "level": "المستوى",
+    "dreamsCount": "{{count}} حلمًا",
+    "restorePurchases": "استعادة المشتريات",
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsOfUse": "شروط الاستخدام",
+    "termsAndConditions": "الشروط والأحكام",
+    "privacyAgreement": "اتفاقية الخصوصية",
+    "notificationSettings": "الإشعارات",
+    "rateUs": "قيّمنا",
+    "support": "الدعم",
+    "deleteAccount": "حذف حسابي",
+    "eula": "EULA",
+    "language": "اللغة",
+    "deleteAccountConfirmTitle": "حذف الحساب",
+    "deleteAccountConfirmMessage": "سيتم حذف حسابك ولن يمكن التراجع. هل تريد المتابعة؟",
+    "deleteAccountSuccess": "تم حذف حسابك",
+    "defaultUsername": "مسافر الأحلام",
+    "editName": "تغيير الاسم",
+    "editNamePlaceholder": "أدخل اسمك",
+    "nameUpdated": "تم تحديث الاسم",
+    "nameUpdateError": "تعذر تحديث الاسم",
+    "languageUpdated": "تم تحديث اللغة",
+    "languageUpdateError": "تعذر تحديث اللغة",
+    "startOnboardingDev": "بدء الإعداد (اختبار)"
+  },
+  "levels": {
+    "new": "حالم مبتدئ",
+    "explorer": "مستكشف الأحلام",
+    "master": "سيد الأحلام",
+    "virtuoso": "بارع الأحلام"
+  },
+  "paywall": {
+    "title": "حزم الأرصدة",
+    "subtitle": "احصل على أرصدة لتصوير المزيد من الأحلام",
+    "emptyHint": "تتوفر الحزم من صفحة الملف الشخصي.",
+    "mostPopular": "الأكثر شعبية",
+    "credits": "{{count}} رصيدًا",
+    "restore": "استعادة المشتريات"
+  },
+  "onboarding": {
+    "step1Title": "صوّر أحلامك",
+    "step1Desc": "صف أحلامك نصًا، والذكاء الاصطناعي يحوّلها إلى فن فريد.",
+    "step2Title": "أكثر من 40 أسلوب فنان",
+    "step2Desc": "فان غوخ ومونيه ودالي وغيرهم. اختر أسلوبًا لكل حلم.",
+    "step3Title": "تفعيل الإشعارات",
+    "step3Desc": "تذكيرات بأحلام جديدة وعروض خاصة.",
+    "step4Title": "جاهز للبدء؟",
+    "step4Desc": "ابدأ برصيد مجاني واحد. استكشف حزمنا.",
+    "next": "التالي",
+    "start": "ابدأ",
+    "enableNotifications": "تفعيل الإشعارات",
+    "skip": "تخطي"
+  },
+  "generation": {
+    "loading": "حلمك يتحول إلى واقع...",
+    "loadingSubtext": "قد يستغرق الأمر بضع ثوانٍ",
+    "interpretation": "التفسير",
+    "save": "حفظ",
+    "share": "مشاركة",
+    "back": "رجوع",
+    "newDream": "حلم جديد",
+    "error": "حدث خطأ",
+    "saved": "تم الحفظ",
+    "saveError": "خطأ في الحفظ",
+    "shareNotSupported": "المشاركة غير مدعومة",
+    "shareError": "خطأ في المشاركة"
+  },
+  "dreamDetail": {
+    "interpretation": "تفسير الحلم",
+    "download": "تنزيل",
+    "share": "مشاركة"
+  },
+  "artists": {
+    "loading": "جارٍ تحميل الفنانين...",
+    "empty": "لم يُعثر على فنانين."
+  },
+  "errors": {
+    "insufficientCredits": "أرصدة غير كافية",
+    "artistLocked": "تحتاج أرصدة لاستخدام هذا الفنان"
+  },
+  "common": {
+    "permissionRequired": "يلزم الإذن",
+    "photoLibraryPermission": "اسمح بالحفظ في مكتبة الصور."
+  }
+}

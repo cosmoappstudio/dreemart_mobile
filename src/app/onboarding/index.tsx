@@ -7,6 +7,7 @@ import { DreamBackground } from '../../components/DreamBackground';
 import { useCallback, useEffect, useState } from 'react';
 import {
   Dimensions,
+  Platform,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -27,75 +28,95 @@ import { AppText } from '../../components/app-text';
 import { useAuth } from '../../contexts/auth-context';
 import { useOnboarding } from '../../contexts/onboarding-context';
 import { useDreemartRevenueCat } from '../../contexts/dreemart-revenuecat-context';
-import { useArtists } from '../../hooks/useArtists';
 import { useProfileContext } from '../../contexts/profile-context';
+import { useAppConfig } from '../../hooks/useAppConfig';
+import { usePushNotifications } from '../../hooks/usePushNotifications';
 import { Analytics } from '../../lib/amplitude';
+import {
+  declineAppTrackingForMeta,
+  requestAppTrackingThenSyncMeta,
+} from '../../lib/requestAppTracking';
+import { supabase } from '../../lib/supabase';
+import {
+  getCurrentLanguage,
+  isSupportedLanguage,
+  setLanguage,
+  type SupportedLanguage,
+} from '../../i18n';
 import { colors, gradients } from '../../constants/theme';
-import { PaywallModal } from '../../components/PaywallModal';
+import { OnboardingLanguageDropdown } from '../../components/OnboardingLanguageDropdown';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const IMAGE_WIDTH = SCREEN_WIDTH - 56;
 
-const STEPS = [
+type Step =
+  | {
+      kind: 'welcome';
+      titleKey: 'onboarding.welcomeTitle';
+      descKey: 'onboarding.welcomeDesc';
+      image: number;
+    }
+  | { kind: 'language' }
+  | { kind: 'tracking' }
+  | { kind: 'push' }
+  | {
+      kind: 'ready';
+      titleKey: 'onboarding.readyTitle';
+      descKey: 'onboarding.readyDesc';
+    };
+
+const STEPS: Step[] = [
   {
-    icon: 'moon' as const,
-    titleKey: 'onboarding.step1Title' as const,
-    descKey: 'onboarding.step1Desc' as const,
+    kind: 'welcome',
+    titleKey: 'onboarding.welcomeTitle',
+    descKey: 'onboarding.welcomeDesc',
     image: require('../../../assets/images/onboarding/onboarding-frida.png'),
   },
+  { kind: 'language' },
+  { kind: 'tracking' },
+  { kind: 'push' },
   {
-    icon: 'color-palette' as const,
-    titleKey: 'onboarding.step2Title' as const,
-    descKey: 'onboarding.step2Desc' as const,
-    image: null,
-    showArtists: true,
-  },
-  {
-    icon: 'notifications' as const,
-    titleKey: 'onboarding.step3Title' as const,
-    descKey: 'onboarding.step3Desc' as const,
-    image: null,
-    isNotification: true,
-  },
-  {
-    icon: 'sparkles' as const,
-    titleKey: 'onboarding.step4Title' as const,
-    descKey: 'onboarding.step4Desc' as const,
-    image: null,
+    kind: 'ready',
+    titleKey: 'onboarding.readyTitle',
+    descKey: 'onboarding.readyDesc',
   },
 ];
-
-const ARTIST_GAP = 12;
-const ARTIST_GRID_COLS = 4;
-const ARTIST_CARD_SIZE = (SCREEN_WIDTH - 56 - (ARTIST_GRID_COLS - 1) * ARTIST_GAP) / ARTIST_GRID_COLS;
 
 export default function OnboardingScreen() {
   const { t } = useTranslation();
   const [step, setStep] = useState(0);
-  const [showPaywall, setShowPaywall] = useState(false);
+  const [selectedLang, setSelectedLang] = useState<SupportedLanguage>(() =>
+    getCurrentLanguage()
+  );
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const { userId } = useAuth();
-  const { profile } = useProfileContext();
+  const { profile, refetch: refetchProfile } = useProfileContext();
   const { setOnboardingDone } = useOnboarding();
-  const { packages, isInitialized } = useDreemartRevenueCat();
-  const { artists } = useArtists(userId, profile?.tier ?? 'free', {
-    preserveSortOrder: true,
-  });
+  const { presentRevenueCatPaywall } = useDreemartRevenueCat();
+  const { registerAndSave: registerPush } = usePushNotifications(userId);
+  const { config: appConfig } = useAppConfig();
 
-  const isLastStep = step === STEPS.length - 1;
   const current = STEPS[step];
-  const isNotificationStep = (current as { isNotification?: boolean }).isNotification === true;
-  const hasImage = !!current.image;
-  const showArtists = (current as { showArtists?: boolean }).showArtists === true;
-  const displayArtists = artists.slice(0, 12);
+  const isLastStep = step === STEPS.length - 1;
+  const isPushStep = current.kind === 'push';
+  const isTrackingStep = current.kind === 'tracking';
+  const isLanguageStep = current.kind === 'language';
+  const isWelcomeStep = current.kind === 'welcome';
 
   const floatY = useSharedValue(0);
   const imageScale = useSharedValue(1);
 
   useEffect(() => {
-    if (!hasImage && !showArtists) return;
-    if (showArtists) return; // no float animation for artist grid
+    const lang = profile?.language;
+    if (lang && isSupportedLanguage(lang)) {
+      setSelectedLang(lang);
+      setLanguage(lang);
+    }
+  }, [profile?.language]);
+
+  useEffect(() => {
+    if (!isWelcomeStep) return;
     floatY.value = withRepeat(
       withSequence(
         withTiming(-8, { duration: 2000 }),
@@ -112,7 +133,7 @@ export default function OnboardingScreen() {
       -1,
       true
     );
-  }, [step, hasImage, showArtists]);
+  }, [step, isWelcomeStep, floatY, imageScale]);
 
   const imageAnimatedStyle = useAnimatedStyle(() => ({
     transform: [
@@ -121,33 +142,80 @@ export default function OnboardingScreen() {
     ],
   }));
 
-  const handleNext = useCallback(async () => {
+  const persistLanguage = useCallback(
+    async (lng: SupportedLanguage) => {
+      setLanguage(lng);
+      setSelectedLang(lng);
+      if (!userId) return;
+      try {
+        await supabase
+          .from('profiles')
+          .update({ language: lng, updated_at: new Date().toISOString() })
+          .eq('id', userId);
+        await refetchProfile();
+      } catch (e) {
+        console.warn('Onboarding language save:', e);
+      }
+    },
+    [userId, refetchProfile]
+  );
+
+  const handleNext = useCallback(() => {
     if (isLastStep) {
-      Analytics.onboardingCompleted();
-      setShowPaywall(true);
-    } else {
-      setStep((s) => s + 1);
+      void (async () => {
+        await presentRevenueCatPaywall('onboarding');
+        Analytics.onboardingCompleted();
+        await setOnboardingDone(true);
+        router.replace('/(tabs)/dream');
+      })();
+      return;
     }
-  }, [isLastStep]);
+    setStep((s) => s + 1);
+  }, [isLastStep, presentRevenueCatPaywall, router, setOnboardingDone]);
 
   const handleEnableNotifications = useCallback(async () => {
     try {
       await Notifications.requestPermissionsAsync();
+      await registerPush();
     } catch (e) {
       console.warn('Notification permission error:', e);
     }
     setStep((s) => s + 1);
-  }, []);
+  }, [registerPush]);
 
   const handleSkipNotifications = useCallback(() => {
     setStep((s) => s + 1);
   }, []);
 
-  const handlePaywallClose = useCallback(async () => {
-    setShowPaywall(false);
-    await setOnboardingDone(true);
-    router.replace('/(tabs)/dream');
-  }, [router, setOnboardingDone]);
+  const handleTrackingAllow = useCallback(async () => {
+    await requestAppTrackingThenSyncMeta();
+    setStep((s) => s + 1);
+  }, []);
+
+  const handleTrackingSkip = useCallback(async () => {
+    await declineAppTrackingForMeta();
+    setStep((s) => s + 1);
+  }, []);
+
+  const title =
+    current.kind === 'welcome' || current.kind === 'ready'
+      ? t(current.titleKey)
+      : current.kind === 'language'
+        ? t('onboarding.languageTitle')
+        : current.kind === 'tracking'
+          ? t('onboarding.trackingTitle')
+          : t('onboarding.pushTitle');
+
+  const description =
+    current.kind === 'welcome'
+      ? t(current.descKey)
+      : current.kind === 'ready'
+        ? t('onboarding.readyDesc', { count: appConfig.initial_free_credits })
+        : current.kind === 'language'
+          ? t('onboarding.languageDesc')
+          : current.kind === 'tracking'
+            ? t('onboarding.trackingDesc')
+            : t('onboarding.pushDesc');
 
   return (
     <DreamBackground style={[styles.container, { paddingTop: insets.top }]}>
@@ -160,48 +228,20 @@ export default function OnboardingScreen() {
         </View>
         <View style={styles.dots}>
           {STEPS.map((_, i) => (
-            <View
-              key={i}
-              style={[
-                styles.dot,
-                i <= step && styles.dotActive,
-              ]}
-            />
+            <View key={i} style={[styles.dot, i <= step && styles.dotActive]} />
           ))}
         </View>
       </View>
 
       <ScrollView
-        contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + 100 }]}
+        nestedScrollEnabled
+        contentContainerStyle={[styles.content, { paddingBottom: insets.bottom + 120 }]}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
       >
-        {showArtists && displayArtists.length > 0 ? (
+        {isWelcomeStep && (
           <Animated.View
-            key={step}
-            entering={FadeIn.duration(400)}
-            exiting={FadeOut.duration(200)}
-            style={styles.artistGridWrap}
-          >
-            <View style={styles.artistGrid}>
-              {displayArtists.map((artist) => (
-                <View key={artist.id} style={styles.artistGridCard}>
-                  <View style={styles.artistGridImageWrap}>
-                    <Image
-                      source={{ uri: artist.image_url }}
-                      style={styles.artistGridImage}
-                      contentFit="cover"
-                    />
-                  </View>
-                  <AppText style={styles.artistGridName} numberOfLines={1}>
-                    {artist.name}
-                  </AppText>
-                </View>
-              ))}
-            </View>
-          </Animated.View>
-        ) : hasImage ? (
-          <Animated.View
-            key={step}
+            key="welcome-img"
             entering={FadeIn.duration(400)}
             exiting={FadeOut.duration(200)}
             style={[styles.imageWrap, imageAnimatedStyle]}
@@ -212,35 +252,54 @@ export default function OnboardingScreen() {
               contentFit="cover"
             />
           </Animated.View>
-        ) : (
+        )}
+
+        {isLanguageStep && (
+          <Animated.View key="lang-block" entering={FadeIn.duration(400)} style={styles.langBlock}>
+            <AppText style={styles.title}>{title}</AppText>
+            <AppText style={styles.description}>{description}</AppText>
+            <OnboardingLanguageDropdown
+              selectedLang={selectedLang}
+              onSelect={persistLanguage}
+            />
+          </Animated.View>
+        )}
+
+        {!isWelcomeStep && !isLanguageStep && (
           <Animated.View
-            key={step}
+            key={`icon-${step}`}
             entering={FadeIn.duration(400)}
             style={styles.iconRing}
           >
             <View style={styles.iconWrapper}>
               <Ionicons
-                name={current.icon}
-                size={isNotificationStep ? 64 : 56}
+                name={
+                  isTrackingStep
+                    ? 'shield-checkmark'
+                    : isPushStep
+                      ? 'notifications'
+                      : 'sparkles'
+                }
+                size={isPushStep ? 64 : 56}
                 color={colors.accent}
               />
             </View>
           </Animated.View>
         )}
-        <Animated.View key={`text-${step}`} entering={FadeIn.delay(150).duration(350)}>
-          <AppText style={styles.title}>{t(current.titleKey)}</AppText>
-          <AppText style={styles.description}>{t(current.descKey)}</AppText>
-        </Animated.View>
+
+        {!isLanguageStep ? (
+          <Animated.View key={`text-${step}`} entering={FadeIn.delay(120).duration(350)}>
+            <AppText style={styles.title}>{title}</AppText>
+            <AppText style={styles.description}>{description}</AppText>
+          </Animated.View>
+        ) : null}
       </ScrollView>
 
       <View style={[styles.footer, { paddingBottom: insets.bottom + 16 }]}>
-        {isNotificationStep ? (
-          <View style={styles.notificationFooter}>
+        {isPushStep ? (
+          <View style={styles.dualFooter}>
             <Pressable
-              style={({ pressed }) => [
-                styles.button,
-                pressed && styles.buttonPressed,
-              ]}
+              style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
               onPress={handleEnableNotifications}
             >
               <LinearGradient
@@ -256,21 +315,40 @@ export default function OnboardingScreen() {
               </LinearGradient>
             </Pressable>
             <Pressable
-              style={({ pressed }) => [
-                styles.skipBtn,
-                pressed && styles.buttonPressed,
-              ]}
+              style={({ pressed }) => [styles.skipBtn, pressed && styles.buttonPressed]}
               onPress={handleSkipNotifications}
             >
               <AppText style={styles.skipBtnText}>{t('onboarding.skip')}</AppText>
             </Pressable>
           </View>
+        ) : isTrackingStep ? (
+          <View style={styles.dualFooter}>
+            <Pressable
+              style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
+              onPress={handleTrackingAllow}
+            >
+              <LinearGradient
+                colors={gradients.primaryAccent}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
+                style={styles.buttonGradient}
+              >
+                <AppText style={styles.buttonText}>{t('onboarding.trackingAllow')}</AppText>
+                {Platform.OS === 'ios' ? (
+                  <Ionicons name="chevron-forward" size={20} color={colors.text} />
+                ) : null}
+              </LinearGradient>
+            </Pressable>
+            <Pressable
+              style={({ pressed }) => [styles.skipBtn, pressed && styles.buttonPressed]}
+              onPress={handleTrackingSkip}
+            >
+              <AppText style={styles.skipBtnText}>{t('onboarding.trackingSkip')}</AppText>
+            </Pressable>
+          </View>
         ) : (
           <Pressable
-            style={({ pressed }) => [
-              styles.button,
-              pressed && styles.buttonPressed,
-            ]}
+            style={({ pressed }) => [styles.button, pressed && styles.buttonPressed]}
             onPress={handleNext}
           >
             <LinearGradient
@@ -282,21 +360,14 @@ export default function OnboardingScreen() {
               <AppText style={styles.buttonText}>
                 {isLastStep ? t('onboarding.start') : t('onboarding.next')}
               </AppText>
-              {!isLastStep && (
+              {!isLastStep ? (
                 <Ionicons name="chevron-forward" size={20} color={colors.text} />
-              )}
+              ) : null}
             </LinearGradient>
           </Pressable>
         )}
       </View>
 
-      <PaywallModal
-        visible={showPaywall}
-        onClose={handlePaywallClose}
-        source="onboarding"
-        packages={packages}
-        isInitialized={isInitialized}
-      />
     </DreamBackground>
   );
 }
@@ -348,15 +419,15 @@ const styles = StyleSheet.create({
   content: {
     flexGrow: 1,
     paddingHorizontal: 28,
-    paddingTop: 24,
+    paddingTop: 20,
     alignItems: 'center',
   },
   imageWrap: {
     width: IMAGE_WIDTH,
-    height: IMAGE_WIDTH * 1.1,
+    height: IMAGE_WIDTH * 1.05,
     borderRadius: 20,
     overflow: 'hidden',
-    marginBottom: 28,
+    marginBottom: 24,
     borderWidth: 2,
     borderColor: 'rgba(249, 115, 22, 0.35)',
   },
@@ -364,45 +435,18 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  artistGridWrap: {
-    width: IMAGE_WIDTH,
-    marginBottom: 28,
-  },
-  artistGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: ARTIST_GAP,
-  },
-  artistGridCard: {
-    width: ARTIST_CARD_SIZE,
-    alignItems: 'center',
-  },
-  artistGridImageWrap: {
-    width: ARTIST_CARD_SIZE,
-    height: ARTIST_CARD_SIZE,
-    borderRadius: 16,
-    overflow: 'hidden',
-    borderWidth: 2,
-    borderColor: 'rgba(249, 115, 22, 0.4)',
-    backgroundColor: 'rgba(124, 58, 237, 0.15)',
-  },
-  artistGridImage: {
+  langBlock: {
     width: '100%',
-    height: '100%',
-  },
-  artistGridName: {
-    fontSize: 11,
-    color: colors.textMuted,
-    marginTop: 6,
-    textAlign: 'center',
-    maxWidth: ARTIST_CARD_SIZE,
+    maxWidth: 400,
+    alignItems: 'center',
+    marginBottom: 8,
   },
   iconRing: {
     padding: 4,
     borderRadius: 70,
     borderWidth: 2,
     borderColor: 'rgba(249, 115, 22, 0.4)',
-    marginBottom: 28,
+    marginBottom: 24,
   },
   iconWrapper: {
     width: 120,
@@ -417,7 +461,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: colors.text,
     textAlign: 'center',
-    marginBottom: 16,
+    marginBottom: 14,
     lineHeight: 34,
   },
   description: {
@@ -425,10 +469,15 @@ const styles = StyleSheet.create({
     color: colors.textMuted,
     textAlign: 'center',
     lineHeight: 26,
+    maxWidth: 360,
   },
   footer: {
     paddingHorizontal: 24,
-    paddingTop: 16,
+    paddingTop: 12,
+  },
+  dualFooter: {
+    width: '100%',
+    gap: 12,
   },
   button: {
     borderRadius: 16,
@@ -448,10 +497,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     color: colors.text,
-  },
-  notificationFooter: {
-    width: '100%',
-    gap: 12,
   },
   skipBtn: {
     paddingVertical: 12,

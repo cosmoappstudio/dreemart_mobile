@@ -22,6 +22,7 @@
     "title": "Profilim",
     "freePlan": "ÜCRETSİZ PLAN",
     "proPlan": "PRO",
+    "creditsSummary": "{{count}} kredi",
     "remainingCredits": "KALAN KREDİ",
     "getCredits": "+ Kredi Al",
     "generated": "ÜRETİLEN",
@@ -41,6 +42,8 @@
     "deleteAccount": "Hesabımı Sil",
     "eula": "EULA",
     "language": "Dil",
+    "languageSearchPlaceholder": "Dil veya isimle ara…",
+    "languageNoResults": "Eşleşen dil yok",
     "deleteAccountConfirmTitle": "Hesabı Sil",
     "deleteAccountConfirmMessage": "Hesabınız silinecek. Bu işlem geri alınamaz. Devam etmek istiyor musunuz?",
     "deleteAccountSuccess": "Hesabınız silindi",
@@ -50,7 +53,8 @@
     "nameUpdated": "İsim güncellendi",
     "nameUpdateError": "İsim güncellenemedi",
     "languageUpdated": "Dil güncellendi",
-    "languageUpdateError": "Dil güncellenemedi"
+    "languageUpdateError": "Dil güncellenemedi",
+    "startOnboardingDev": "Onboarding’i başlat (test)"
   },
   "levels": {
     "new": "Yeni Rüyacı",
@@ -67,18 +71,23 @@
     "restore": "Satın Alımları Geri Yükle"
   },
   "onboarding": {
-    "step1Title": "Rüyalarını Görselleştir",
-    "step1Desc": "Rüyalarını metin olarak anlat, yapay zeka onları benzersiz sanat eserlerine dönüştürsün.",
-    "step2Title": "40'tan Fazla Sanatçı Stili",
-    "step2Desc": "Van Gogh, Monet, Dalí ve daha fazlası. Her rüyana özel bir sanatçı stili seç.",
-    "step3Title": "Bildirimleri Aç",
-    "step3Desc": "Yeni rüya hatırlatmaları ve özel tekliflerden haberdar ol.",
-    "step4Title": "Başlamaya Hazır Mısın?",
-    "step4Desc": "1 ücretsiz kredi ile hemen başla. Daha fazlası için kredi paketlerimizi keşfet.",
+    "welcomeTitle": "Dreemart'a hoş geldin",
+    "welcomeDesc": "Rüyalarını yapay zeka ile eşsiz tablolara dönüştür. Birkaç kısa adımda hazırsın.",
+    "languageTitle": "Dilini seç",
+    "languageDesc": "Bunu istediğin zaman profilden değiştirebilirsin.",
+    "trackingTitle": "Kişiselleştirmemize izin ver",
+    "trackingDesc": "Bu izin reklamları ölçmemize ve uygulamayı geliştirmemize yardımcı olur. Ayarlardan sonra değiştirebilirsin.",
+    "trackingAllow": "Devam et",
+    "trackingSkip": "Şimdi değil",
+    "pushTitle": "Haberdar kal",
+    "pushDesc": "Hafif hatırlatmalar ve ara sıra kampanyalar — asla spam değil.",
+    "readyTitle": "Hazırsın",
+    "readyDesc_one": "İlk rüyan için 1 ücretsiz kredin var. Daha fazlası için paketlere göz atabilirsin.",
+    "readyDesc_other": "İlk rüyan için {{count}} ücretsiz kredin var. Daha fazlası için paketlere göz atabilirsin.",
     "next": "İleri",
-    "start": "Başla",
-    "enableNotifications": "Bildirimleri Aç",
-    "skip": "Atla"
+    "start": "Devam et",
+    "enableNotifications": "Bildirimleri aç",
+    "skip": "Şimdi değil"
   },
   "generation": {
     "loading": "Rüyan canlanıyor...",
@@ -87,6 +96,7 @@
     "save": "Kaydet",
     "share": "Paylaş",
     "back": "Geri Dön",
+    "close": "Kapat",
     "newDream": "Yeni Rüya",
     "error": "Bir hata oluştu",
     "saved": "Kaydedildi",
@@ -105,7 +115,7 @@
   },
   "errors": {
     "insufficientCredits": "Yetersiz kredi",
-    "artistLocked": "Bu sanatçı ücretsiz planda kullanılamaz"
+    "artistLocked": "Bu sanatçı stilini kullanmak için kredi gerekir"
   },
   "common": {
     "permissionRequired": "İzin Gerekli",

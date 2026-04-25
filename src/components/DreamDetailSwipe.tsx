@@ -18,6 +18,7 @@ import { Image } from 'expo-image';
 import { useToast } from 'heroui-native';
 import { useTranslation } from 'react-i18next';
 import { AppText } from './app-text';
+import { InterpretationBody } from './InterpretationBody';
 import { Analytics } from '../lib/amplitude';
 import { colors } from '../constants/theme';
 import type { Dream } from '../types';
@@ -90,7 +91,13 @@ export function DreamDetailSwipe({
 
   return (
     <View style={styles.container}>
-      <Pressable style={styles.closeBtn} onPress={onClose}>
+      <Pressable
+        style={[
+          styles.closeBtn,
+          { top: insets.top + 8, right: Math.max(insets.right, 12) + 4 },
+        ]}
+        onPress={onClose}
+      >
         <View style={styles.closeBtnInner}>
           <Ionicons name="close" size={22} color={colors.text} />
         </View>
@@ -129,9 +136,11 @@ export function DreamDetailSwipe({
               <Ionicons name="sparkles" size={18} color={colors.accent} />
               <AppText style={styles.interpretationLabel}>{t('dreamDetail.interpretation')}</AppText>
             </View>
-            <AppText style={styles.interpretationText}>
-              {dream.interpretation}
-            </AppText>
+            <InterpretationBody
+              text={dream.interpretation}
+              paragraphStyle={styles.interpretationText}
+              gap={16}
+            />
           </ScrollView>
         </View>
       </ScrollView>
@@ -192,8 +201,6 @@ const styles = StyleSheet.create({
   },
   closeBtn: {
     position: 'absolute',
-    top: 12,
-    right: 16,
     zIndex: 10,
   },
   closeBtnInner: {

@@ -1,0 +1,115 @@
+{
+  "tabs": {
+    "dream": "Sen",
+    "gallery": "Galeria",
+    "profile": "Profil"
+  },
+  "dream": {
+    "title": "OPISZ SWÓJ SEN",
+    "artistTitle": "WYBIERZ ARTYSTĘ",
+    "artistSubtitle": "Każdy kosztuje 1 kredyt",
+    "placeholder": "Wczoraj w nocy wspinałem się po nieskończonych schodach...",
+    "createBtn": "Stwórz obraz ({{count}} kredyt)",
+    "hint": "Im dokładniej opiszesz sen, tym lepsza będzie wizualizacja."
+  },
+  "gallery": {
+    "title": "Galeria",
+    "loading": "Ładowanie...",
+    "empty": "Brak snów. Stwórz pierwszy!",
+    "emptySubtext": "Opisz sny, twórz obrazy"
+  },
+  "profile": {
+    "title": "Mój profil",
+    "freePlan": "PLAN DARMOWY",
+    "proPlan": "PRO",
+    "remainingCredits": "POZOSTAŁE KREDYTY",
+    "getCredits": "+ Kup kredyty",
+    "generated": "WYGENEROWANE",
+    "totalDreams": "Sny łącznie",
+    "dreamScore": "WYNIK SNÓW",
+    "dreamScoreFormula": "Sny łącznie x 10",
+    "level": "POZIOM",
+    "dreamsCount": "{{count}} snów",
+    "restorePurchases": "Przywróć zakupy",
+    "privacyPolicy": "Polityka prywatności",
+    "termsOfUse": "Warunki użytkowania",
+    "termsAndConditions": "Regulamin",
+    "privacyAgreement": "Umowa o prywatności",
+    "notificationSettings": "Powiadomienia",
+    "rateUs": "Oceń nas",
+    "support": "Wsparcie",
+    "deleteAccount": "Usuń konto",
+    "eula": "EULA",
+    "language": "Język",
+    "deleteAccountConfirmTitle": "Usuwanie konta",
+    "deleteAccountConfirmMessage": "Twoje konto zostanie usunięte. Tej operacji nie cofniesz. Kontynuować?",
+    "deleteAccountSuccess": "Konto zostało usunięte",
+    "defaultUsername": "Podróżnik snów",
+    "editName": "Zmień nazwę",
+    "editNamePlaceholder": "Wpisz swoje imię",
+    "nameUpdated": "Nazwa zaktualizowana",
+    "nameUpdateError": "Nie udało się zaktualizować nazwy",
+    "languageUpdated": "Język zaktualizowany",
+    "languageUpdateError": "Nie udało się zaktualizować języka",
+    "startOnboardingDev": "Uruchom onboarding (test)"
+  },
+  "levels": {
+    "new": "Nowy śniący",
+    "explorer": "Odkrywca snów",
+    "master": "Mistrz snów",
+    "virtuoso": "Wirtuoz snów"
+  },
+  "paywall": {
+    "title": "Pakiety kredytów",
+    "subtitle": "Zdobądź kredyty, by wizualizować więcej snów",
+    "emptyHint": "Pakiety znajdziesz na stronie profilu.",
+    "mostPopular": "Najpopularniejszy",
+    "credits": "{{count}} kredytów",
+    "restore": "Przywróć zakupy"
+  },
+  "onboarding": {
+    "step1Title": "Wizualizuj swoje sny",
+    "step1Desc": "Opisz sen tekstem, a AI zamieni go w unikalne dzieło sztuki.",
+    "step2Title": "Ponad 40 stylów artystów",
+    "step2Desc": "Van Gogh, Monet, Dalí i więcej. Wybierz styl dla każdego snu.",
+    "step3Title": "Włącz powiadomienia",
+    "step3Desc": "Przypomnienia o nowych snach i oferty specjalne.",
+    "step4Title": "Gotowy na start?",
+    "step4Desc": "Zacznij od 1 darmowego kredytu. Zobacz nasze pakiety.",
+    "next": "Dalej",
+    "start": "Start",
+    "enableNotifications": "Włącz powiadomienia",
+    "skip": "Pomiń"
+  },
+  "generation": {
+    "loading": "Twój sen ożywa...",
+    "loadingSubtext": "To może potrwać kilka sekund",
+    "interpretation": "Interpretacja",
+    "save": "Zapisz",
+    "share": "Udostępnij",
+    "back": "Wstecz",
+    "newDream": "Nowy sen",
+    "error": "Wystąpił błąd",
+    "saved": "Zapisano",
+    "saveError": "Błąd zapisu",
+    "shareNotSupported": "Udostępnianie niedostępne",
+    "shareError": "Błąd udostępniania"
+  },
+  "dreamDetail": {
+    "interpretation": "Interpretacja snu",
+    "download": "Pobierz",
+    "share": "Udostępnij"
+  },
+  "artists": {
+    "loading": "Ładowanie artystów...",
+    "empty": "Nie znaleziono artystów."
+  },
+  "errors": {
+    "insufficientCredits": "Za mało kredytów",
+    "artistLocked": "Potrzebujesz kredytów, by użyć tego artysty"
+  },
+  "common": {
+    "permissionRequired": "Wymagane pozwolenie",
+    "photoLibraryPermission": "Zezwól na zapis w bibliotece zdjęć."
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "tabs": {
+    "dream": "सपना",
+    "gallery": "गैलरी",
+    "profile": "प्रोफ़ाइल"
+  },
+  "dream": {
+    "title": "अपना सपना बताएँ",
+    "artistTitle": "कलाकार चुनें",
+    "artistSubtitle": "प्रत्येक में 1 क्रेडिट लगता है",
+    "placeholder": "कल रात मैं एक अंतहीन सीढ़ी चढ़ रहा था...",
+    "createBtn": "अपनी पेंटिंग बनाएँ ({{count}} क्रेडिट)",
+    "hint": "जितना विस्तार से सपना लिखेंगे, दृश्य उतना ही बेहतर होगा।"
+  },
+  "gallery": {
+    "title": "गैलरी",
+    "loading": "लोड हो रहा है...",
+    "empty": "अभी कोई सपना नहीं। अपना पहला सपना बनाएँ!",
+    "emptySubtext": "सपने लिखें, चित्र बनाएँ"
+  },
+  "profile": {
+    "title": "मेरी प्रोफ़ाइल",
+    "freePlan": "मुफ़्त प्लान",
+    "proPlan": "PRO",
+    "remainingCredits": "बचे क्रेडिट",
+    "getCredits": "+ क्रेडिट लें",
+    "generated": "बनाए गए",
+    "totalDreams": "कुल सपने",
+    "dreamScore": "ड्रीम स्कोर",
+    "dreamScoreFormula": "कुल सपने × 10",
+    "level": "स्तर",
+    "dreamsCount": "{{count}} सपने",
+    "restorePurchases": "खरीदारी पुनर्स्थापित करें",
+    "privacyPolicy": "गोपनीयता नीति",
+    "termsOfUse": "उपयोग की शर्तें",
+    "termsAndConditions": "नियम व शर्तें",
+    "privacyAgreement": "गोपनीयता समझौता",
+    "notificationSettings": "सूचनाएँ",
+    "rateUs": "हमें रेट करें",
+    "support": "सहायता",
+    "deleteAccount": "खाता हटाएँ",
+    "eula": "EULA",
+    "language": "भाषा",
+    "deleteAccountConfirmTitle": "खाता हटाना",
+    "deleteAccountConfirmMessage": "आपका खाता हट जाएगा। यह वापस नहीं हो सकता। जारी रखें?",
+    "deleteAccountSuccess": "आपका खाता हटा दिया गया",
+    "defaultUsername": "सपनों का यात्री",
+    "editName": "नाम बदलें",
+    "editNamePlaceholder": "अपना नाम दर्ज करें",
+    "nameUpdated": "नाम अपडेट हो गया",
+    "nameUpdateError": "नाम अपडेट नहीं हो सका",
+    "languageUpdated": "भाषा अपडेट हो गई",
+    "languageUpdateError": "भाषा अपडेट नहीं हो सकी",
+    "startOnboardingDev": "ऑनबोर्डिंग शुरू करें (टेस्ट)"
+  },
+  "levels": {
+    "new": "नया सपनों वाला",
+    "explorer": "सपनों का खोजकर्ता",
+    "master": "सपनों का मास्टर",
+    "virtuoso": "सपनों का वर्चुओसो"
+  },
+  "paywall": {
+    "title": "क्रेडिट पैक",
+    "subtitle": "और सपने दिखाने के लिए क्रेडिट लें",
+    "emptyHint": "क्रेडिट पैक प्रोफ़ाइल पृष्ठ से मिलते हैं।",
+    "mostPopular": "सबसे लोकप्रिय",
+    "credits": "{{count}} क्रेडिट",
+    "restore": "खरीदारी पुनर्स्थापित करें"
+  },
+  "onboarding": {
+    "step1Title": "अपने सपने दिखाएँ",
+    "step1Desc": "सपने लिखें, AI उन्हें अनोखी कलाकृतियों में बदल देगा।",
+    "step2Title": "40+ कलाकार शैलियाँ",
+    "step2Desc": "वान गॉग, मोनेट, दाली और अधिक। हर सपने के लिए शैली चुनें।",
+    "step3Title": "सूचनाएँ चालू करें",
+    "step3Desc": "नए सपनों की याद दिलाएँ और ऑफ़र पाएँ।",
+    "step4Title": "शुरू करने के लिए तैयार?",
+    "step4Desc": "1 मुफ़्त क्रेडिट से शुरू करें। हमारे पैक देखें।",
+    "next": "आगे",
+    "start": "शुरू करें",
+    "enableNotifications": "सूचनाएँ चालू करें",
+    "skip": "छोड़ें"
+  },
+  "generation": {
+    "loading": "आपका सपना जीवंत हो रहा है...",
+    "loadingSubtext": "इसमें कुछ सेकंड लग सकते हैं",
+    "interpretation": "व्याख्या",
+    "save": "सेव करें",
+    "share": "शेयर करें",
+    "back": "वापस",
+    "newDream": "नया सपना",
+    "error": "एक त्रुटि हुई",
+    "saved": "सेव हो गया",
+    "saveError": "सेव त्रुटि",
+    "shareNotSupported": "शेयर समर्थित नहीं",
+    "shareError": "शेयर त्रुटि"
+  },
+  "dreamDetail": {
+    "interpretation": "सपने की व्याख्या",
+    "download": "डाउनलोड",
+    "share": "शेयर करें"
+  },
+  "artists": {
+    "loading": "कलाकार लोड हो रहे हैं...",
+    "empty": "कोई कलाकार नहीं मिला।"
+  },
+  "errors": {
+    "insufficientCredits": "क्रेडिट कम हैं",
+    "artistLocked": "इस कलाकार के लिए क्रेडिट चाहिए"
+  },
+  "common": {
+    "permissionRequired": "अनुमति चाहिए",
+    "photoLibraryPermission": "फ़ोटो लाइब्रेरी में सेव करने की अनुमति दें।"
+  }
+}

@@ -12,8 +12,8 @@ export default {
     bundleIdentifier: 'com.dreemart.app',
     buildNumber: '1',
     supportsTablet: false,
-    UIDeviceFamily: [1],
     infoPlist: {
+      UIDeviceFamily: [1],
       NSPhotoLibraryAddUsageDescription:
         'Rüya görselinizi fotoğraf kütüphanenize kaydetmek için izin gerekiyor.',
       NSPhotoLibraryUsageDescription:
@@ -21,6 +21,7 @@ export default {
     },
   },
   plugins: [
+    'expo-dev-client',
     'expo-router',
     [
       'expo-splash-screen',
@@ -36,28 +37,47 @@ export default {
       'expo-notifications',
       {
         icon: './assets/images/icon.png',
+        color: '#7C3AED',
         sounds: [],
         mode: 'production',
       },
     ],
     [
-      'react-native-fbsdk-next',
+      'expo-tracking-transparency',
       {
-        appID: process.env.EXPO_PUBLIC_META_APP_ID || '',
-        clientToken: process.env.EXPO_PUBLIC_META_CLIENT_TOKEN || '',
-        displayName: 'Dreemart',
-        scheme: 'dreemart',
-        advertiserIDCollectionEnabled: false,
-        autoLogAppEventsEnabled: true,
-        isAutoInitEnabled: true,
+        userTrackingPermission:
+          'Kişiselleştirilmiş içerik ve ölçüm için izninize ihtiyacımız var. Bu veriler rüya deneyimini iyileştirmek için kullanılır.',
       },
     ],
+    ...(process.env.EXPO_PUBLIC_FACEBOOK_APP_ID
+      ? [
+          [
+            'react-native-fbsdk-next',
+            {
+              appID: process.env.EXPO_PUBLIC_FACEBOOK_APP_ID,
+              clientToken: process.env.EXPO_PUBLIC_FACEBOOK_CLIENT_TOKEN || '',
+              displayName: 'Dreemart',
+              scheme: `fb${process.env.EXPO_PUBLIC_FACEBOOK_APP_ID}`,
+              advertiserIDCollectionEnabled: false,
+              autoLogAppEventsEnabled: true,
+              isAutoInitEnabled: true,
+              iosUserTrackingPermission:
+                'Rüya görselleştirmelerinizi geliştirmek için bu izin kullanılacak.',
+            },
+          ],
+        ]
+      : []),
   ],
   experiments: {
     typedRoutes: true,
     reactCompiler: true,
   },
   extra: {
-    eas: { projectId: process.env.EAS_PROJECT_ID || '' },
+    /** EAS link/build; env ile override edilebilir */
+    eas: {
+      projectId:
+        process.env.EAS_PROJECT_ID || 'ac098b62-2a78-4589-b3c2-558ad5a3a3cc',
+    },
   },
+  owner: process.env.EAS_OWNER || undefined,
 };

@@ -1,0 +1,115 @@
+{
+  "tabs": {
+    "dream": "Droom",
+    "gallery": "Galerij",
+    "profile": "Profiel"
+  },
+  "dream": {
+    "title": "BESCHRIJF JE DROOM",
+    "artistTitle": "KIES EEN KUNSTENAAR",
+    "artistSubtitle": "Elke stijl kost 1 credit",
+    "placeholder": "Gisteravond klom ik een eindeloze trap...",
+    "createBtn": "Maak je schilderij ({{count}} credit)",
+    "hint": "Hoe gedetailleerder je droom, hoe beter de visualisatie."
+  },
+  "gallery": {
+    "title": "Galerij",
+    "loading": "Laden...",
+    "empty": "Nog geen dromen. Maak je eerste droom!",
+    "emptySubtext": "Beschrijf je dromen, maak je schilderijen"
+  },
+  "profile": {
+    "title": "Mijn profiel",
+    "freePlan": "GRATIS PLAN",
+    "proPlan": "PRO",
+    "remainingCredits": "RESTCREDITS",
+    "getCredits": "+ Credits kopen",
+    "generated": "GEMAAKT",
+    "totalDreams": "Totaal dromen",
+    "dreamScore": "DROOMSCORE",
+    "dreamScoreFormula": "Totaal dromen x 10",
+    "level": "NIVEAU",
+    "dreamsCount": "{{count}} dromen",
+    "restorePurchases": "Aankopen herstellen",
+    "privacyPolicy": "Privacybeleid",
+    "termsOfUse": "Gebruiksvoorwaarden",
+    "termsAndConditions": "Algemene voorwaarden",
+    "privacyAgreement": "Privacyovereenkomst",
+    "notificationSettings": "Meldingen",
+    "rateUs": "Beoordeel ons",
+    "support": "Support",
+    "deleteAccount": "Account verwijderen",
+    "eula": "EULA",
+    "language": "Taal",
+    "deleteAccountConfirmTitle": "Account verwijderen",
+    "deleteAccountConfirmMessage": "Je account wordt verwijderd. Dit kan niet ongedaan worden. Doorgaan?",
+    "deleteAccountSuccess": "Je account is verwijderd",
+    "defaultUsername": "Droomreiziger",
+    "editName": "Naam wijzigen",
+    "editNamePlaceholder": "Voer je naam in",
+    "nameUpdated": "Naam bijgewerkt",
+    "nameUpdateError": "Naam bijwerken mislukt",
+    "languageUpdated": "Taal bijgewerkt",
+    "languageUpdateError": "Taal bijwerken mislukt",
+    "startOnboardingDev": "Onboarding starten (test)"
+  },
+  "levels": {
+    "new": "Nieuwe dromer",
+    "explorer": "Droomontdekker",
+    "master": "Droommeester",
+    "virtuoso": "Droomvirtuoos"
+  },
+  "paywall": {
+    "title": "Creditpakketten",
+    "subtitle": "Koop credits om meer dromen te visualiseren",
+    "emptyHint": "Creditpakketten vind je op de profielpagina.",
+    "mostPopular": "Populairste",
+    "credits": "{{count}} credits",
+    "restore": "Aankopen herstellen"
+  },
+  "onboarding": {
+    "step1Title": "Visualiseer je dromen",
+    "step1Desc": "Beschrijf je dromen in tekst; AI maakt er unieke kunst van.",
+    "step2Title": "Meer dan 40 kunstenaarsstijlen",
+    "step2Desc": "Van Gogh, Monet, Dalí en meer. Kies per droom een stijl.",
+    "step3Title": "Meldingen inschakelen",
+    "step3Desc": "Herinneringen en aanbiedingen ontvangen.",
+    "step4Title": "Klaar om te starten?",
+    "step4Desc": "Begin met 1 gratis credit. Bekijk onze pakketten.",
+    "next": "Volgende",
+    "start": "Start",
+    "enableNotifications": "Meldingen inschakelen",
+    "skip": "Overslaan"
+  },
+  "generation": {
+    "loading": "Je droom wordt levend...",
+    "loadingSubtext": "Dit kan een paar seconden duren",
+    "interpretation": "Interpretatie",
+    "save": "Opslaan",
+    "share": "Delen",
+    "back": "Terug",
+    "newDream": "Nieuwe droom",
+    "error": "Er is een fout opgetreden",
+    "saved": "Opgeslagen",
+    "saveError": "Opslaan mislukt",
+    "shareNotSupported": "Delen niet ondersteund",
+    "shareError": "Delen mislukt"
+  },
+  "dreamDetail": {
+    "interpretation": "Droomuitleg",
+    "download": "Downloaden",
+    "share": "Delen"
+  },
+  "artists": {
+    "loading": "Kunstenaars laden...",
+    "empty": "Geen kunstenaars gevonden."
+  },
+  "errors": {
+    "insufficientCredits": "Onvoldoende credits",
+    "artistLocked": "Je hebt credits nodig voor deze kunstenaar"
+  },
+  "common": {
+    "permissionRequired": "Toestemming vereist",
+    "photoLibraryPermission": "Geef toegang om op te slaan in de fotobibliotheek."
+  }
+}

@@ -4,15 +4,8 @@ import * as MediaLibrary from 'expo-media-library';
 import * as Sharing from 'expo-sharing';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { DreamBackground } from '../components/DreamBackground';
-import { useCallback, useEffect, useState } from 'react';
-import {
-  Alert,
-  Platform,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Alert, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Image } from 'expo-image';
 import { useTranslation } from 'react-i18next';
@@ -21,14 +14,16 @@ import { GenerationLoader } from '../components/GenerationLoader';
 import { useAuth } from '../contexts/auth-context';
 import { useToast } from 'heroui-native';
 import { generateDream } from '../lib/api';
+import { InterpretationBody } from '../components/InterpretationBody';
 import { Analytics } from '../lib/amplitude';
 import { colors } from '../constants/theme';
 
 export default function GenerationScreen() {
   const { t } = useTranslation();
-  const { prompt, artist_id } = useLocalSearchParams<{
+  const { prompt, artist_id, rid } = useLocalSearchParams<{
     prompt: string;
     artist_id: string;
+    rid?: string;
   }>();
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>(
     'loading'
@@ -44,12 +39,23 @@ export default function GenerationScreen() {
   const router = useRouter();
   const { userId } = useAuth();
   const { toast } = useToast();
+  const toastRef = useRef(toast);
+  toastRef.current = toast;
+
+  /** toast/router referansları her render'da değişebildiği için effect'i onlara bağlamıyoruz; aynı isteği iki kez göndermeyi engelliyoruz. */
+  const firedForKeyRef = useRef<string | null>(null);
 
   useEffect(() => {
     if (!userId || !prompt || !artist_id) {
       router.back();
       return;
     }
+
+    const dedupeKey = rid ?? `${userId}|${prompt}|${artist_id}`;
+    if (firedForKeyRef.current === dedupeKey) {
+      return;
+    }
+    firedForKeyRef.current = dedupeKey;
 
     let mounted = true;
 
@@ -79,14 +85,17 @@ export default function GenerationScreen() {
               : err.message === 'artist_locked'
                 ? t('errors.artistLocked')
                 : t('generation.error');
-          toast.show({ label: msg, variant: 'danger' });
+          toastRef.current.show({ label: msg, variant: 'danger' });
         }
       });
 
     return () => {
       mounted = false;
+      firedForKeyRef.current = null;
     };
-  }, [userId, prompt, artist_id, router, toast]);
+    // rid: her "Oluştur" tıklamasında benzersiz; toast/router bilinçli olarak dışarıda.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- yalnızca gerçek üretim girdileri yeniden tetiklemeli
+  }, [userId, prompt, artist_id, rid]);
 
   const handleSave = useCallback(async () => {
     if (!imageUrl) return;
@@ -132,6 +141,14 @@ export default function GenerationScreen() {
     router.replace('/(tabs)/dream');
   }, [router]);
 
+  const handleClose = useCallback(() => {
+    if (router.canGoBack()) {
+      router.back();
+    } else {
+      router.replace('/(tabs)/dream');
+    }
+  }, [router]);
+
   if (status === 'loading') {
     return (
       <DreamBackground style={[styles.container, { paddingTop: insets.top }]}>
@@ -162,6 +179,20 @@ export default function GenerationScreen() {
 
   return (
     <DreamBackground style={[styles.container, { paddingTop: insets.top }]}>
+      <Pressable
+        style={[
+          styles.closeBtn,
+          { top: insets.top + 8, right: Math.max(insets.right, 12) + 4 },
+        ]}
+        onPress={handleClose}
+        hitSlop={12}
+        accessibilityRole="button"
+        accessibilityLabel={t('generation.close')}
+      >
+        <View style={styles.closeBtnInner}>
+          <Ionicons name="close" size={22} color={colors.text} />
+        </View>
+      </Pressable>
       <ScrollView
         style={styles.scroll}
         contentContainerStyle={[
@@ -180,7 +211,11 @@ export default function GenerationScreen() {
         {interpretation && (
           <View style={styles.interpretation}>
             <AppText style={styles.interpretationLabel}>{t('generation.interpretation')}</AppText>
-            <AppText style={styles.interpretationText}>{interpretation}</AppText>
+            <InterpretationBody
+              text={interpretation}
+              paragraphStyle={styles.interpretationText}
+              gap={14}
+            />
           </View>
         )}
       </ScrollView>
@@ -208,6 +243,18 @@ export default function GenerationScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  closeBtn: {
+    position: 'absolute',
+    zIndex: 20,
+  },
+  closeBtnInner: {
+    width: 40,
+    height: 40,
+    borderRadius: 12,
+    backgroundColor: 'rgba(255,255,255,0.12)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   scroll: {
     flex: 1,
